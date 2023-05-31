@@ -15,11 +15,11 @@ class LoginPage extends StatelessWidget {
           decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
-                  'images/office.jpg',
+                  'assets/images/office.jpg',
                 ),
                 fit: BoxFit.cover),
           ),
-          margin: const EdgeInsets.all(24),
+          margin: const EdgeInsets.all(29),
           child: Column(
             children: [
               _header(context),
@@ -156,6 +156,7 @@ Widget buildRememberMeBtn() {
               'Forgot Password?',
               style: TextStyle(
                 color: Colors.white,
+                fontSize: 12,
               ),
             ),
           ),
