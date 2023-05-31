@@ -11,23 +11,20 @@ class LoginPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[800],
-        //backgroundColor: Colors.white,
         body: Container(
-          /*decoration: const BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/office.jpg'),
-              fit: BoxFit.cover,
-              opacity: 50,
-            ),
-          ),*/
+                image: AssetImage(
+                  'images/office.jpg',
+                ),
+                fit: BoxFit.cover),
+          ),
           margin: const EdgeInsets.all(24),
           child: Column(
             children: [
               _header(context),
               _inputField(context),
-              //_elevatedButton(context),
               buildRememberMeBtn(),
-
               buildLoginbtn(),
               buildStatement(),
               buildText(),
@@ -43,7 +40,7 @@ class LoginPage extends StatelessWidget {
 
 _header(context) {
   return const Padding(
-    padding: EdgeInsets.only(top: 120),
+    padding: EdgeInsets.only(top: 90),
     child: Column(
       children: [
         Text(
@@ -56,7 +53,7 @@ _header(context) {
         ),
         Text(
           "Login into your account to continue",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         SizedBox(
           height: 60,
@@ -199,7 +196,7 @@ Widget buildStatement() {
           onPressed: () => print('Sign up!'),
           child: const Text(
             'Sign Up!',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: AppColors.signup),
           ),
         ),
       ),
@@ -219,7 +216,7 @@ Widget buildText() {
         ),
       ),
       const SizedBox(
-        height: 20,
+        height: 50,
       ),
     ],
   );
