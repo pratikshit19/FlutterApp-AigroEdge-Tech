@@ -6,20 +6,24 @@ class LoginPage extends StatelessWidget {
   bool isRememberMe = false;
   LoginPage({super.key});
 
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey[800],
         body: Container(
+          height: double.infinity,
+          width: double.infinity,
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(
-                  'assets/images/office.jpg',
-                ),
-                fit: BoxFit.cover),
+              image: AssetImage(
+                'assets/images/office.jpg',
+              ),
+              fit: BoxFit.fitHeight,
+              opacity: 0.3,
+            ),
           ),
-          margin: const EdgeInsets.all(29),
+          //margin: const EdgeInsets.all(29),
           child: Column(
             children: [
               _header(context),
@@ -64,63 +68,81 @@ _header(context) {
 }
 
 _inputField(context) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: const Color(0xffFFFF).withOpacity(0.5),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Center(
-            child: TextField(
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                border: InputBorder.none,
-                hintText: 'Username',
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 40),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: const Color(0xffFFFF).withOpacity(0.5),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Center(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  border: InputBorder.none,
+                  hintText: 'Username',
+                ),
+                // ignore: body_might_complete_normally_nullable
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Username cannot be empty";
+                  }
+                },
               ),
             ),
           ),
         ),
-      ),
 
-      const SizedBox(
-        height: 40,
-      ),
-
-      Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: const Color(0xffFFFF).withOpacity(0.5),
-          borderRadius: BorderRadius.circular(30),
+        const SizedBox(
+          height: 40,
         ),
-        child: const Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Center(
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                border: InputBorder.none,
-                hintText: 'Password',
+
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: const Color(0xffFFFF).withOpacity(0.5),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Center(
+              child: TextFormField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  border: InputBorder.none,
+                  hintText: 'Password',
+                ),
+                // ignore: body_might_complete_normally_nullable
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Username cannot be empty";
+                  } else if (value.length < 6) {
+                    return "Password should be atleast 6 characters";
+                  }
+                },
               ),
             ),
           ),
         ),
-      ),
 
-      //const Text('Remember Me'),
-    ],
+        //const Text('Remember Me'),
+      ],
+    ),
   );
 }
 
 Widget buildRememberMeBtn() {
   bool? isRememberMe = false;
-  return Padding(
-    padding: const EdgeInsets.all(10),
+
+  return Container(
+    padding: const EdgeInsets.only(left: 50),
     child: Row(
       children: [
         SizedBox(
@@ -142,7 +164,7 @@ Widget buildRememberMeBtn() {
               ),
               const Text(
                 'Remember me',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 12),
               ),
             ],
           ),
@@ -173,11 +195,11 @@ Widget buildLoginbtn() {
       onPressed: () {},
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 35),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 45),
         backgroundColor: Colors.grey[900],
       ),
       child: const Text(
-        'Login',
+        'Log in',
         style: TextStyle(fontSize: 17),
       ));
 }
@@ -233,12 +255,12 @@ Widget buildLoginOptions() {
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               backgroundColor: AppColors.fblogo,
             ),
             child: const Text(
               'Login with facebook',
-              style: TextStyle(fontSize: 8),
+              style: TextStyle(fontSize: 11),
             )),
       ),
       Container(
@@ -246,12 +268,12 @@ Widget buildLoginOptions() {
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               backgroundColor: AppColors.googlelogo,
             ),
             child: const Text(
               'Login with google',
-              style: TextStyle(fontSize: 8),
+              style: TextStyle(fontSize: 11),
             )),
       ),
     ],
