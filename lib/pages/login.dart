@@ -1,11 +1,21 @@
+// ignore: avoid_web_libraries_in_flutter
+
 import 'package:design/app_colors.dart';
+import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class LoginPage extends StatelessWidget {
-  bool isRememberMe = false;
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool isRememberMe = false;
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -27,9 +37,9 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: [
               _header(context),
-              _inputField(context),
+              //_inputField(context),
               buildRememberMeBtn(),
-              buildLoginbtn(),
+              buildLoginbtn(context),
               buildStatement(),
               buildText(),
               buildLoginOptions()
@@ -43,46 +53,41 @@ class LoginPage extends StatelessWidget {
 }
 
 _header(context) {
-  return const Padding(
-    padding: EdgeInsets.only(top: 90),
-    child: Column(
-      children: [
-        Text(
-          'Welcome',
-          style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Text(
-          "Login into your account to continue",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: 60,
-        ),
-      ],
-    ),
-  );
-}
-
-_inputField(context) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 40),
+  String name = "";
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 90),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Text(
+          "Welcome $name",
+          style: const TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        const Text(
+          "Login into your account to continue",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 60,
+        ),
         Container(
           height: 50,
           decoration: BoxDecoration(
-            color: const Color(0xffFFFF).withOpacity(0.5),
+            color: const Color(0xffFFFFFF).withOpacity(0.5),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
             child: Center(
               child: TextFormField(
+                onChanged: (value) {
+                  name = value;
+                  setState(() {});
+                },
                 decoration: const InputDecoration(
                   fillColor: Colors.white,
                   border: InputBorder.none,
@@ -98,15 +103,13 @@ _inputField(context) {
             ),
           ),
         ),
-
         const SizedBox(
           height: 40,
         ),
-
         Container(
           height: 50,
           decoration: BoxDecoration(
-            color: const Color(0xffFFFF).withOpacity(0.5),
+            color: const Color(0xffFFFFFF).withOpacity(0.5),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Padding(
@@ -131,12 +134,24 @@ _inputField(context) {
             ),
           ),
         ),
+      ],
+    ),
+  );
+}
+
+/*_inputField(context) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 40),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        
 
         //const Text('Remember Me'),
       ],
     ),
   );
-}
+}*/
 
 Widget buildRememberMeBtn() {
   bool? isRememberMe = false;
@@ -173,6 +188,7 @@ Widget buildRememberMeBtn() {
           padding: const EdgeInsets.only(left: 70, right: 0, top: 0),
           alignment: Alignment.topRight,
           child: TextButton(
+            // ignore: avoid_print
             onPressed: () => print("Forgot Password pressed"),
             child: const Text(
               'Forgot Password?',
@@ -190,14 +206,16 @@ Widget buildRememberMeBtn() {
 
 void setState(Null Function() param0) {}
 
-Widget buildLoginbtn() {
+Widget buildLoginbtn(BuildContext context) {
   return ElevatedButton(
-      onPressed: () {},
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 45),
         backgroundColor: Colors.grey[900],
       ),
+      onPressed: () {
+        Navigator.popAndPushNamed(context, MyRoutes.homeRoute);
+      },
       child: const Text(
         'Log in',
         style: TextStyle(fontSize: 17),
