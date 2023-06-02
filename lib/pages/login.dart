@@ -20,8 +20,9 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.grey[800],
-        body: Container(
+
+        //backgroundColor: Colors.white,
+        body: /*Container(
           height: double.infinity,
           width: double.infinity,
           decoration: const BoxDecoration(
@@ -33,7 +34,19 @@ class _LoginPageState extends State<LoginPage> {
               opacity: 0.3,
             ),
           ),
-          //margin: const EdgeInsets.all(29),
+        ),*/
+            Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'assets/images/loginbg.png',
+              ),
+              fit: BoxFit.fitWidth,
+              opacity: 1,
+            ),
+          ),
           child: Column(
             children: [
               _header(context),
@@ -41,8 +54,8 @@ class _LoginPageState extends State<LoginPage> {
               buildRememberMeBtn(),
               buildLoginbtn(context),
               buildStatement(),
-              buildText(),
-              buildLoginOptions()
+              //buildText(),
+              //buildLoginOptions()
               //_forgotPassword(context),
             ],
           ),
@@ -55,29 +68,30 @@ class _LoginPageState extends State<LoginPage> {
 _header(context) {
   String name = "";
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 90),
+    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 180),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           "Welcome $name",
           style: const TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         const SizedBox(
           height: 30,
         ),
         const Text(
           "Login into your account to continue",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),
         ),
         const SizedBox(
-          height: 60,
+          height: 50,
         ),
         Container(
           height: 50,
           decoration: BoxDecoration(
-            color: const Color(0xffFFFFFF).withOpacity(0.5),
+            color: const Color(0xffEBFDF2).withOpacity(0.5),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Padding(
@@ -89,7 +103,7 @@ _header(context) {
                   setState(() {});
                 },
                 decoration: const InputDecoration(
-                  fillColor: Colors.white,
+                  fillColor: Colors.black,
                   border: InputBorder.none,
                   hintText: 'Username',
                 ),
@@ -104,28 +118,28 @@ _header(context) {
           ),
         ),
         const SizedBox(
-          height: 40,
+          height: 45,
         ),
         Container(
           height: 50,
           decoration: BoxDecoration(
-            color: const Color(0xffFFFFFF).withOpacity(0.5),
+            color: const Color(0xffEBFDF2).withOpacity(0.5),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20, bottom: 0),
             child: Center(
               child: TextFormField(
                 obscureText: true,
                 decoration: const InputDecoration(
-                  fillColor: Colors.white,
+                  fillColor: Colors.black,
                   border: InputBorder.none,
                   hintText: 'Password',
                 ),
                 // ignore: body_might_complete_normally_nullable
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Username cannot be empty";
+                    return "Password cannot be empty";
                   } else if (value.length < 6) {
                     return "Password should be atleast 6 characters";
                   }
@@ -139,25 +153,11 @@ _header(context) {
   );
 }
 
-/*_inputField(context) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 40),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        
-
-        //const Text('Remember Me'),
-      ],
-    ),
-  );
-}*/
-
 Widget buildRememberMeBtn() {
   bool? isRememberMe = false;
 
   return Container(
-    padding: const EdgeInsets.only(left: 50),
+    padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 0),
     child: Row(
       children: [
         SizedBox(
@@ -168,7 +168,7 @@ Widget buildRememberMeBtn() {
                 data: ThemeData(unselectedWidgetColor: Colors.grey),
                 child: Checkbox(
                   value: isRememberMe,
-                  checkColor: Colors.black,
+                  checkColor: AppColors.themeColor,
                   activeColor: Colors.white,
                   onChanged: (value) {
                     setState(() {
@@ -179,7 +179,7 @@ Widget buildRememberMeBtn() {
               ),
               const Text(
                 'Remember me',
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: TextStyle(color: Colors.black, fontSize: 12),
               ),
             ],
           ),
@@ -193,7 +193,8 @@ Widget buildRememberMeBtn() {
             child: const Text(
               'Forgot Password?',
               style: TextStyle(
-                color: Colors.white,
+                decoration: TextDecoration.underline,
+                color: Colors.black,
                 fontSize: 12,
               ),
             ),
@@ -209,9 +210,9 @@ void setState(Null Function() param0) {}
 Widget buildLoginbtn(BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 145),
         shape: const StadiumBorder(),
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 45),
-        backgroundColor: Colors.grey[900],
+        backgroundColor: AppColors.themeColor,
       ),
       onPressed: () {
         Navigator.popAndPushNamed(context, MyRoutes.homeRoute);
@@ -226,19 +227,16 @@ Widget buildStatement() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Container(
-        child: const Text(
-          'Dont have an account?',
-          style: TextStyle(color: Colors.white),
-        ),
+      const Text(
+        'Dont have an account?',
+        style: TextStyle(color: Colors.black),
       ),
-      Container(
-        child: TextButton(
-          onPressed: () => print('Sign up!'),
-          child: const Text(
-            'Sign Up!',
-            style: TextStyle(color: AppColors.signup),
-          ),
+      TextButton(
+        // ignore: avoid_print
+        onPressed: () => print('Sign up!'),
+        child: const Text(
+          'Sign Up!',
+          style: TextStyle(color: AppColors.signup),
         ),
       ),
     ],
@@ -281,19 +279,17 @@ Widget buildLoginOptions() {
               style: TextStyle(fontSize: 11),
             )),
       ),
-      Container(
-        child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-              backgroundColor: AppColors.googlelogo,
-            ),
-            child: const Text(
-              'Login with google',
-              style: TextStyle(fontSize: 11),
-            )),
-      ),
+      ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            shape: const StadiumBorder(),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            backgroundColor: AppColors.googlelogo,
+          ),
+          child: const Text(
+            'Login with google',
+            style: TextStyle(fontSize: 11),
+          )),
     ],
   );
 }
