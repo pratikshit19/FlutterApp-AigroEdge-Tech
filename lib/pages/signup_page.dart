@@ -1,5 +1,4 @@
 import 'package:design/app_colors.dart';
-import 'package:design/pages/login.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/routes.dart';
@@ -16,6 +15,7 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         height: double.infinity,
         width: double.infinity,

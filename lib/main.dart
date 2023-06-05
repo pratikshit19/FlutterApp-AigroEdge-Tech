@@ -1,5 +1,6 @@
 import 'package:design/pages/signup_page.dart';
 import 'package:design/utils/routes.dart';
+// ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'pages/home/home.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      /*home: StreamBuilder<User?>(
+      home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -29,12 +30,12 @@ class MyApp extends StatelessWidget {
             return const LoginPage();
           }
         },
-      ),*/
+      ),
       title: 'Login Page',
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      //initialRoute: "/",
       routes: {
-        "/": (context) => const SignupPage(),
+        //"/": (context) => const SignupPage(),
         MyRoutes.homeRoute: (context) => const HomePage(),
         MyRoutes.loginRoute: (context) => const LoginPage(),
         MyRoutes.signupRoute: (context) => const SignupPage(),
