@@ -2,7 +2,9 @@
 
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
@@ -20,22 +22,7 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-
-        //backgroundColor: Colors.white,
-        body: /*Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                'assets/images/office.jpg',
-              ),
-              fit: BoxFit.fitHeight,
-              opacity: 0.3,
-            ),
-          ),
-        ),*/
-            Container(
+        body: Container(
           height: double.infinity,
           width: double.infinity,
           decoration: const BoxDecoration(
@@ -49,11 +36,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           child: Column(
             children: [
-              _header(context),
+              buildHeader(context),
               //_inputField(context),
               buildRememberMeBtn(),
               buildLoginbtn(context),
-              buildStatement(),
+              buildStatement(context),
               //buildText(),
               //buildLoginOptions()
               //_forgotPassword(context),
@@ -65,10 +52,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-_header(context) {
+@override
+Widget buildHeader(BuildContext context) {
   String name = "";
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  // ignore: unused_element
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    dispose();
+  }
+
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 180),
+    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 170),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -98,6 +97,7 @@ _header(context) {
             padding: const EdgeInsets.only(left: 20),
             child: Center(
               child: TextFormField(
+                controller: emailController,
                 onChanged: (value) {
                   name = value;
                   setState(() {});
@@ -105,12 +105,12 @@ _header(context) {
                 decoration: const InputDecoration(
                   fillColor: Colors.black,
                   border: InputBorder.none,
-                  hintText: 'Username',
+                  hintText: 'Email',
                 ),
                 // ignore: body_might_complete_normally_nullable
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Username cannot be empty";
+                    return "Email cannot be empty";
                   }
                 },
               ),
@@ -130,6 +130,7 @@ _header(context) {
             padding: const EdgeInsets.only(left: 20, bottom: 0),
             child: Center(
               child: TextFormField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
                   fillColor: Colors.black,
@@ -154,10 +155,13 @@ _header(context) {
 }
 
 Widget buildRememberMeBtn() {
-  bool? isRememberMe = false;
+  bool? isRememberMe = true;
 
   return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 0),
+    padding: const EdgeInsets.symmetric(
+      horizontal: 45,
+      vertical: 0,
+    ),
     child: Row(
       children: [
         SizedBox(
@@ -165,7 +169,7 @@ Widget buildRememberMeBtn() {
           child: Row(
             children: <Widget>[
               Theme(
-                data: ThemeData(unselectedWidgetColor: Colors.grey),
+                data: ThemeData(unselectedWidgetColor: AppColors.themeColor),
                 child: Checkbox(
                   value: isRememberMe,
                   checkColor: AppColors.themeColor,
@@ -223,7 +227,7 @@ Widget buildLoginbtn(BuildContext context) {
       ));
 }
 
-Widget buildStatement() {
+Widget buildStatement(context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -233,13 +237,27 @@ Widget buildStatement() {
       ),
       TextButton(
         // ignore: avoid_print
-        onPressed: () => print('Sign up!'),
+        onPressed: () {
+          Navigator.popAndPushNamed(context, MyRoutes.signupRoute);
+        },
+
+        //Navigator.popAndPushNamed(context, MyRoutes.signupRoute);
+
         child: const Text(
           'Sign Up!',
           style: TextStyle(color: AppColors.signup),
         ),
       ),
     ],
+  );
+}
+
+Future signIn() async {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: emailController.text.trim(),
+    password: passwordController.text.trim(),
   );
 }
 
@@ -257,39 +275,6 @@ Widget buildText() {
       const SizedBox(
         height: 50,
       ),
-    ],
-  );
-}
-
-Widget buildLoginOptions() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Container(
-        padding: const EdgeInsets.only(right: 50),
-        child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-              backgroundColor: AppColors.fblogo,
-            ),
-            child: const Text(
-              'Login with facebook',
-              style: TextStyle(fontSize: 11),
-            )),
-      ),
-      ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            shape: const StadiumBorder(),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-            backgroundColor: AppColors.googlelogo,
-          ),
-          child: const Text(
-            'Login with google',
-            style: TextStyle(fontSize: 11),
-          )),
     ],
   );
 }
