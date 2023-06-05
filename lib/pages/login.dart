@@ -14,6 +14,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool isRememberMe = false;
 
+  // Define controllers for email and password fields
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.only(left: 20),
               child: Center(
                 child: TextFormField(
+                  controller: emailController, // Assign the controller
                   onChanged: (value) {
                     name = value;
                     setState(() {});
@@ -115,6 +120,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.only(left: 20, bottom: 0),
               child: Center(
                 child: TextFormField(
+                  controller: passwordController, // Assign the controller
                   obscureText: true,
                   decoration: const InputDecoration(
                     fillColor: Colors.grey,
@@ -190,6 +196,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      // Sign in successful
+      print('User signed in successfully!');
+    } catch (e) {
+      // Sign in failed
+      print('Sign in error: $e');
+    }
+  }
+
   Widget buildButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -197,8 +217,26 @@ class _LoginPageState extends State<LoginPage> {
         shape: const StadiumBorder(),
         backgroundColor: AppColors.themeColor,
       ),
-      onPressed: () {
-        Navigator.popAndPushNamed(context, MyRoutes.homeRoute);
+      onPressed: () async {
+        // Get the entered email and password
+        String email = emailController.text.trim();
+        String password = passwordController.text.trim();
+
+        // Call the sign in method
+        await signInWithEmailAndPassword(email, password);
+
+        // Navigate to the home page or show an error message based on the authentication result
+        if (FirebaseAuth.instance.currentUser != null) {
+          // ignore: use_build_context_synchronously
+          Navigator.pushNamed(context, MyRoutes.homeRoute);
+        } else {
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login failed. Please check your credentials.'),
+            ),
+          );
+        }
       },
       child: const Text(
         'Log in',
@@ -207,12 +245,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildFooter(context) {
+  Widget buildFooter(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Dont have an account?',
+          'Don\'t have an account?',
           style: TextStyle(color: Colors.black),
         ),
         TextButton(
