@@ -25,8 +25,10 @@ class Auth {
         email: email,
         password: password,
       );
+      // ignore: avoid_print
       print('User signed in successfully!');
     } catch (e) {
+      // ignore: avoid_print
       print('Sign in error: $e');
     }
   }
@@ -41,8 +43,10 @@ class Auth {
         email: email,
         password: password,
       );
+      // ignore: avoid_print
       print('User registered successfully!');
     } catch (e) {
+      // ignore: avoid_print
       print('Registration error: $e');
     }
   }

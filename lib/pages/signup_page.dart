@@ -120,11 +120,13 @@ class _SignupPageState extends State<SignupPage> {
                     }
 
                     // Sign up successful
+                    // ignore: avoid_print
                     print('User signed up successfully!');
                     // ignore: use_build_context_synchronously
                     Navigator.pushNamed(context, MyRoutes.homeRoute);
                   } catch (e) {
                     // Sign up failed
+                    // ignore: avoid_print
                     print('Sign up error: $e');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -168,6 +170,7 @@ class _SignupPageState extends State<SignupPage> {
               if (value!.isEmpty) {
                 return "Field cannot be empty";
               }
+              return null;
             },
           ),
         ),

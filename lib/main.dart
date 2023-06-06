@@ -1,4 +1,5 @@
 import 'package:design/pages/signup_page.dart';
+import 'package:design/pages/welcome_page.dart';
 import 'package:design/utils/routes.dart';
 // ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             return const HomePage();
           } else {
-            return const SignupPage();
+            return const WelcomePage();
           }
         },
       ),
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         MyRoutes.homeRoute: (context) => const HomePage(),
         MyRoutes.loginRoute: (context) => const LoginPage(),
         MyRoutes.signupRoute: (context) => const SignupPage(),
+        MyRoutes.welcomeRoute: (context) => const WelcomePage(),
       },
       //home: const HomePage(),
     );

@@ -33,9 +33,11 @@ class _LoginPageState extends State<LoginPage> {
         email: email,
         password: password,
       );
+      // ignore: avoid_print
       print('User signed in successfully!');
       return userCredential;
     } catch (e) {
+      // ignore: avoid_print
       print('Sign in error: $e');
       rethrow;
     }
@@ -167,6 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.only(left: 50, right: 0, top: 0),
                   alignment: Alignment.topRight,
                   child: TextButton(
+                    // ignore: avoid_print
                     onPressed: () => print("Forgot Password pressed"),
                     child: const Text(
                       'Forgot Password?',
