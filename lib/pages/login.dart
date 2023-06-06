@@ -1,8 +1,10 @@
-// ignore: avoid_web_libraries_in_flutter
+import 'dart:async';
+
 import 'package:design/app_colors.dart';
-import 'package:design/utils/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../utils/routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,55 +15,47 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool isRememberMe = false;
-
-  // Define controllers for email and password fields
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  late Completer<UserCredential> _completer;
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                'assets/images/loginbg.png',
-              ),
-              fit: BoxFit.fitWidth,
-              opacity: 1,
-            ),
-          ),
-          child: Column(
-            children: [
-              buildHeader(context),
-              buildButton(context),
-              buildFooter(context),
-            ],
-          ),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    _completer = Completer<UserCredential>();
+  }
+
+  Future<UserCredential> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print('User signed in successfully!');
+      return userCredential;
+    } catch (e) {
+      print('Sign in error: $e');
+      rethrow;
+    }
   }
 
   Widget buildHeader(BuildContext context) {
     String name = "";
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 170),
+    return Container(
+      padding: const EdgeInsets.only(top: 270, bottom: 55, left: 20, right: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             "Welcome $name",
             style: const TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: AppColors.themeColor,
-            ),
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: AppColors.themeColor // Replace with your desired color
+                ),
           ),
           const SizedBox(
             height: 30,
@@ -87,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.only(left: 20),
               child: Center(
                 child: TextFormField(
-                  controller: emailController, // Assign the controller
+                  controller: emailController,
                   onChanged: (value) {
                     name = value;
                     setState(() {});
@@ -120,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.only(left: 20, bottom: 0),
               child: Center(
                 child: TextFormField(
-                  controller: passwordController, // Assign the controller
+                  controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     fillColor: Colors.grey,
@@ -151,20 +145,16 @@ class _LoginPageState extends State<LoginPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Theme(
-                        data: ThemeData(
-                          unselectedWidgetColor: AppColors.themeColor,
-                        ),
-                        child: Checkbox(
-                          value: isRememberMe,
-                          checkColor: AppColors.themeColor,
-                          activeColor: Colors.white,
-                          onChanged: (value) {
-                            setState(() {
-                              isRememberMe = value!;
-                            });
-                          },
-                        ),
+                      Checkbox(
+                        value: isRememberMe,
+                        checkColor: AppColors
+                            .themeColor, // Replace with your desired color
+                        activeColor: Colors.white,
+                        onChanged: (value) {
+                          setState(() {
+                            isRememberMe = value!;
+                          });
+                        },
                       ),
                       const Text(
                         'Remember me',
@@ -196,41 +186,27 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      // Sign in successful
-      print('User signed in successfully!');
-    } catch (e) {
-      // Sign in failed
-      print('Sign in error: $e');
-    }
-  }
-
   Widget buildButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 145),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 160),
         shape: const StadiumBorder(),
-        backgroundColor: AppColors.themeColor,
+        backgroundColor:
+            AppColors.themeColor, // Replace with your desired color
       ),
       onPressed: () async {
-        // Get the entered email and password
         String email = emailController.text.trim();
         String password = passwordController.text.trim();
 
-        // Call the sign in method
-        await signInWithEmailAndPassword(email, password);
+        try {
+          UserCredential userCredential =
+              await signInWithEmailAndPassword(email, password);
 
-        // Navigate to the home page or show an error message based on the authentication result
-        if (FirebaseAuth.instance.currentUser != null) {
+          _completer.complete(userCredential);
+
           // ignore: use_build_context_synchronously
           Navigator.pushNamed(context, MyRoutes.homeRoute);
-        } else {
-          // ignore: use_build_context_synchronously
+        } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Login failed. Please check your credentials.'),
@@ -259,10 +235,38 @@ class _LoginPageState extends State<LoginPage> {
           },
           child: const Text(
             'Sign Up!',
-            style: TextStyle(color: AppColors.signup),
+            style: TextStyle(
+                color: Colors.blue), // Replace with your desired color
           ),
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/loginbg.png'),
+              fit: BoxFit.fitWidth,
+              opacity: 1,
+            ),
+          ),
+          child: Column(
+            children: [
+              buildHeader(context),
+              buildButton(context),
+              buildFooter(context),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

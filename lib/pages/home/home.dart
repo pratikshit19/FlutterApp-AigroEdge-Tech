@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'AigroEdge',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -73,18 +73,18 @@ class HomePage extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.search,
                             size: 20,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           IconButton(
                             onPressed: () {
                               openMenu(
                                   context); // Call the custom menu function
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.menu,
                               size: 20,
                               color: Colors.white,
@@ -94,16 +94,16 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
-                  SizedBox(height: 20),
-                  Padding(
+                  const SizedBox(height: 15),
+                  const SizedBox(height: 20),
+                  const Padding(
                     padding: EdgeInsets.only(left: 3, bottom: 8),
                     child: Body(),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Center(
               child: SizedBox(
                 width: 150,
@@ -130,7 +130,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             const Text('Last Updated on ', textAlign: TextAlign.center),
             const Padding(
               padding: EdgeInsets.only(top: 10, left: 15, right: 15),

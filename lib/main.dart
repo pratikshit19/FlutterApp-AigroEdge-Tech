@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             return const HomePage();
           } else {
-            return const LoginPage();
+            return const SignupPage();
           }
         },
       ),
-      title: 'Login Page',
+      //title: 'Login Page',
       debugShowCheckedModeBanner: false,
       //initialRoute: "/",
       routes: {

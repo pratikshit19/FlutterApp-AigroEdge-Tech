@@ -51,7 +51,7 @@ class _SignupPageState extends State<SignupPage> {
     return Flexible(
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 200, left: 20, right: 20),
+          padding: const EdgeInsets.only(top: 220, left: 20, right: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -189,7 +189,7 @@ class _SignupPageState extends State<SignupPage> {
           },
           child: const Text(
             'Log In!',
-            style: TextStyle(color: AppColors.signup),
+            style: TextStyle(color: Colors.blue),
           ),
         ),
       ],
