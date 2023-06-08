@@ -5,7 +5,7 @@ class AppColors {
   static const Color googlelogo = Color(0xff22C0F2);
   static const Color signup = Color(0xffA1C2E0);
   static const Color appbar = Color(0xff222423);
-  static const Color themeColor = Color(0xff184A2C);
+  static const Color themeColor = Color(0xff487750);
 }
 
 /*List<Color> gridColors = [

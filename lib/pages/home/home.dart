@@ -73,10 +73,25 @@ class HomePage extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.search,
-                            size: 20,
-                            color: Colors.white,
+                          Container(
+                            // Modified code for the search button
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              //color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: TextButton(
+                              //color: AppColors.themeColor,
+                              onPressed: () {
+                                // Handle search button press
+                              },
+                              child: const Icon(
+                                Icons.search,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                           const SizedBox(width: 10),
                           IconButton(
@@ -94,8 +109,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 15),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 35),
+                  // const SizedBox(height: 20),
                   const Padding(
                     padding: EdgeInsets.only(left: 3, bottom: 8),
                     child: Body(),
@@ -124,7 +139,7 @@ class HomePage extends StatelessWidget {
                   child: const Text(
                     'Choose a Device',
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 13,
                     ),
                   ),
                 ),

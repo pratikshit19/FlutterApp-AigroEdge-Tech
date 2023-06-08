@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:design/app_colors.dart';
+import 'package:design/pages/forgot_pass.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -170,7 +171,13 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.topRight,
                   child: TextButton(
                     // ignore: avoid_print
-                    onPressed: () => print("Forgot Password pressed"),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ForgotPassword()),
+                      );
+                    },
                     child: const Text(
                       'Forgot Password?',
                       style: TextStyle(
