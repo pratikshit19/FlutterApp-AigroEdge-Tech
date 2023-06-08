@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: isLogin ? const OnboardingPage() : const OnboardingPage(),
+      home: isLogin ? const HomePage() : const OnboardingPage(),
       /*StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {

@@ -6,6 +6,9 @@ class AppColors {
   static const Color signup = Color(0xffA1C2E0);
   static const Color appbar = Color(0xff222423);
   static const Color themeColor = Color(0xff487750);
+  static const Color textfields = Color(0xff629F7B);
+  static const Color widgets = Color(0xff8BA571);
+  static const Color darkgreen = Color(0xff8184a2c);
 }
 
 /*List<Color> gridColors = [

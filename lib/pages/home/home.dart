@@ -1,5 +1,4 @@
 import 'package:design/app_colors.dart';
-import 'package:design/pages/home/components/body.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/routes.dart';
@@ -7,151 +6,245 @@ import '../../utils/routes.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  void openMenu(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Menu'),
-          content: const Text('Do you want to logout?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Perform logout functionality here
-                // For example, you can clear user session or navigate to the login screen
-                Navigator.pop(context); // Close the dialog
-                Navigator.pushNamedAndRemoveUntil(
-                    context, MyRoutes.loginRoute, (route) => false);
-              },
-              child: const Text('Logout'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      backgroundColor: const Color(0xffF4F4F2),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: 75,
+        leading: IconButton(
+          color: Colors.black,
+          onPressed: () {
+            Scaffold.of(context).openDrawer(); // Open the drawer
+          },
+          icon: const Icon(Icons.menu),
+        ),
+        title: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 85),
+          child: Text(
+            'AigroCare',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        actions: [
+          IconButton(
+            color: Colors.black,
+            onPressed: () {},
+            icon: const Icon(Icons.notifications),
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: AppColors.widgets.withOpacity(0.3),
+              ),
+              child: const Text(
+                'Drawer Header',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                // Add your logic for handling item 1 tap
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Add your logic for handling item 2 tap
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.only(
-                top: 15,
-                left: 15,
-                right: 15,
-                bottom: 10,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: AppColors.widgets.withOpacity(0.4),
               ),
-              decoration: const BoxDecoration(
-                color: AppColors.themeColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
+              width: MediaQuery.of(context).size.width,
+              height: 150,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: AppColors.darkgreen,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              width: MediaQuery.of(context).size.width,
+              height: 45,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            const Text(
+              "Features",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'AigroEdge',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            // Modified code for the search button
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              //color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: TextButton(
-                              //color: AppColors.themeColor,
-                              onPressed: () {
-                                // Handle search button press
-                              },
-                              child: const Icon(
-                                Icons.search,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          IconButton(
-                            onPressed: () {
-                              openMenu(
-                                  context); // Call the custom menu function
-                            },
-                            icon: const Icon(
-                              Icons.menu,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
                   ),
-                  const SizedBox(height: 35),
-                  // const SizedBox(height: 20),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 3, bottom: 8),
-                    child: Body(),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 15),
-            Center(
-              child: SizedBox(
-                width: 150,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 15,
-                    ),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                    backgroundColor: AppColors.themeColor,
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Choose a Device',
-                    style: TextStyle(
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-              ),
+            const SizedBox(
+              height: 20,
             ),
-            const SizedBox(height: 5),
-            const Text('Last Updated on ', textAlign: TextAlign.center),
-            const Padding(
-              padding: EdgeInsets.only(top: 10, left: 15, right: 15),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.widgets.withOpacity(0.4),
+                    ),
+                    width: 155,
+                    height: 150,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.black,
+        unselectedLabelStyle: const TextStyle(color: Colors.black),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.black,
+              size: 35,
+            ),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.analytics,
+              color: Colors.black,
+              size: 35,
+            ),
+            label: 'Analytics',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              color: Colors.black,
+              size: 35,
+            ),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+              size: 35,
+            ),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

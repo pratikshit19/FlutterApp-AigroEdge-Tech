@@ -1,5 +1,4 @@
 import 'package:design/app_colors.dart';
-import 'package:design/pages/home/home.dart';
 import 'package:design/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -115,7 +114,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ElevatedButton(
                   onPressed: () {
                     if (currentIndex == contents.length - 1) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (_) => const WelcomePage()));

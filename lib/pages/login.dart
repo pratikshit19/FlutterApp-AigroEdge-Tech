@@ -48,14 +48,18 @@ class _LoginPageState extends State<LoginPage> {
     String name = "";
 
     return Container(
-      padding: const EdgeInsets.only(top: 270, bottom: 55, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 30, bottom: 55, left: 25, right: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Image.asset('assets/images/stock_img3.png'),
+          const SizedBox(
+            height: 25,
+          ),
           Text(
             "Welcome $name",
             style: const TextStyle(
-                fontSize: 25,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: AppColors.themeColor // Replace with your desired color
                 ),
@@ -67,21 +71,21 @@ class _LoginPageState extends State<LoginPage> {
             "Login into your account to continue",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.normal,
             ),
           ),
           const SizedBox(
-            height: 50,
+            height: 40,
           ),
           Container(
-            height: 50,
+            height: 60,
             decoration: BoxDecoration(
-              color: const Color(0xffEBFDF2).withOpacity(0.5),
+              color: AppColors.textfields.withOpacity(0.2),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 25),
               child: Center(
                 child: TextFormField(
                   controller: emailController,
@@ -105,16 +109,16 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           const SizedBox(
-            height: 45,
+            height: 20,
           ),
           Container(
-            height: 50,
+            height: 60,
             decoration: BoxDecoration(
-              color: const Color(0xffEBFDF2).withOpacity(0.5),
+              color: AppColors.textfields.withOpacity(0.2),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 20, bottom: 0),
+              padding: const EdgeInsets.only(left: 25, bottom: 0),
               child: Center(
                 child: TextFormField(
                   controller: passwordController,
@@ -199,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 160),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 156),
         shape: const StadiumBorder(),
         backgroundColor:
             AppColors.themeColor, // Replace with your desired color
@@ -258,16 +262,9 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
+        body: SizedBox(
           height: double.infinity,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/loginbg.png'),
-              fit: BoxFit.fitWidth,
-              opacity: 1,
-            ),
-          ),
           child: Column(
             children: [
               buildHeader(context),

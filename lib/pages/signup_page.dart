@@ -24,18 +24,9 @@ class _SignupPageState extends State<SignupPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
+        body: SizedBox(
           height: double.infinity,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                'assets/images/loginbg.png',
-              ),
-              fit: BoxFit.fitWidth,
-              opacity: 1,
-            ),
-          ),
           child: Column(
             children: [
               buildHeader(context),
@@ -51,41 +42,45 @@ class _SignupPageState extends State<SignupPage> {
     return Flexible(
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 220, left: 20, right: 20),
+          padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset('assets/images/stock_img4.png'),
+              const SizedBox(
+                height: 25,
+              ),
               const Text(
                 'Sign Up!',
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: AppColors.themeColor),
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               buildTextField(fullNameController, 'Enter Full Name'),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               buildTextField(emailController, 'Enter Email'),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               buildTextField(passwordController, 'Enter Password', true),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               buildTextField(
                   confirmPasswordController, 'Confirm Password', true),
               const SizedBox(
-                height: 70,
+                height: 30,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 150),
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 145),
                   shape: const StadiumBorder(),
                   backgroundColor: AppColors.themeColor,
                 ),
@@ -140,6 +135,7 @@ class _SignupPageState extends State<SignupPage> {
                   style: TextStyle(fontSize: 17),
                 ),
               ),
+              //const SizedBox(height: 10),
             ],
           ),
         ),
@@ -150,9 +146,9 @@ class _SignupPageState extends State<SignupPage> {
   Widget buildTextField(TextEditingController controller, String hintText,
       [bool obscureText = false]) {
     return Container(
-      height: 50,
+      height: 60,
       decoration: BoxDecoration(
-        color: const Color(0xffEBFDF2).withOpacity(0.5),
+        color: AppColors.textfields.withOpacity(0.2),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Padding(
