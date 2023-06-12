@@ -1,3 +1,4 @@
+import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class AnalyticsScreen extends StatelessWidget {
@@ -9,11 +10,11 @@ class AnalyticsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 75,
+        toolbarHeight: 60,
         leading: IconButton(
           color: Colors.black,
           onPressed: () {
-            // Open the drawer
+            Navigator.pushNamed(context, MyRoutes.homeRoute); // Open the drawer
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -24,13 +25,7 @@ class AnalyticsScreen extends StatelessWidget {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        actions: [
-          IconButton(
-            color: Colors.black,
-            onPressed: () {},
-            icon: const Icon(Icons.settings),
-          ),
-        ],
+        // actions: [],
       ),
     );
   }

@@ -59,10 +59,10 @@ class _LoginPageState extends State<LoginPage> {
           Text(
             "Welcome $name",
             style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: AppColors.themeColor // Replace with your desired color
-                ),
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black, // Replace with your desired color
+            ),
           ),
           const SizedBox(
             height: 30,
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 40,
           ),
           Container(
-            height: 60,
+            height: 50,
             decoration: BoxDecoration(
               color: AppColors.textfields.withOpacity(0.2),
               borderRadius: BorderRadius.circular(30),
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 20,
           ),
           Container(
-            height: 60,
+            height: 50,
             decoration: BoxDecoration(
               color: AppColors.textfields.withOpacity(0.2),
               borderRadius: BorderRadius.circular(30),
@@ -203,10 +203,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 156),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 156),
         shape: const StadiumBorder(),
-        backgroundColor:
-            AppColors.themeColor, // Replace with your desired color
+        backgroundColor: AppColors.darkgreen, // Replace with your desired color
       ),
       onPressed: () async {
         String email = emailController.text.trim();

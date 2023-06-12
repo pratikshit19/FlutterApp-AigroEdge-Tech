@@ -1,3 +1,5 @@
+import 'package:design/app_colors.dart';
+import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -9,11 +11,11 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 75,
+        toolbarHeight: 60,
         leading: IconButton(
           color: Colors.black,
           onPressed: () {
-            // Open the drawer
+            Navigator.pushNamed(context, MyRoutes.homeRoute); // Open the drawer
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -24,11 +26,24 @@ class SearchScreen extends StatelessWidget {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        actions: [
-          IconButton(
-            color: Colors.black,
-            onPressed: () {},
-            icon: const Icon(Icons.settings),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                color: AppColors.widgets.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                    hintText: 'Search',
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: Icon(Icons.cancel_rounded)),
+              ),
+            ),
           ),
         ],
       ),

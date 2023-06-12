@@ -1,4 +1,5 @@
 import 'package:design/app_colors.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +56,7 @@ class _SignupPageState extends State<SignupPage> {
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.themeColor),
+                    color: Colors.black),
               ),
               const SizedBox(
                 height: 20,
@@ -75,14 +76,14 @@ class _SignupPageState extends State<SignupPage> {
               buildTextField(
                   confirmPasswordController, 'Confirm Password', true),
               const SizedBox(
-                height: 30,
+                height: 60,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 145),
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 145),
                   shape: const StadiumBorder(),
-                  backgroundColor: AppColors.themeColor,
+                  backgroundColor: AppColors.darkgreen,
                 ),
                 onPressed: () async {
                   String fullName = fullNameController.text.trim();
@@ -146,7 +147,7 @@ class _SignupPageState extends State<SignupPage> {
   Widget buildTextField(TextEditingController controller, String hintText,
       [bool obscureText = false]) {
     return Container(
-      height: 60,
+      height: 50,
       decoration: BoxDecoration(
         color: AppColors.textfields.withOpacity(0.2),
         borderRadius: BorderRadius.circular(30),
