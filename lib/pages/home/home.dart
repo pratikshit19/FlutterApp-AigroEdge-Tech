@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> widgetList = const [
     Dashboard(),
     AnalyticsScreen(),
+    AnalyticsScreen(),
     SearchScreen(),
     ProfileScreen(),
   ];
@@ -33,9 +34,11 @@ class _HomePageState extends State<HomePage> {
           });
         },
         currentIndex: myIndex,
-        type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.shifting,
         selectedItemColor: Colors.black,
-        unselectedLabelStyle: const TextStyle(color: Colors.black),
+        unselectedLabelStyle: const TextStyle(
+          color: Colors.black,
+        ),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(
@@ -52,6 +55,14 @@ class _HomePageState extends State<HomePage> {
               size: 35,
             ),
             label: 'Analytics',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.camera_alt_rounded,
+              color: Colors.black,
+              size: 35,
+            ),
+            label: 'Camera',
           ),
           BottomNavigationBarItem(
             icon: Icon(

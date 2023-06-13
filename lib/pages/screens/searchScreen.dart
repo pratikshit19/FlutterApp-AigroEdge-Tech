@@ -37,8 +37,8 @@ class SearchScreen extends StatelessWidget {
                 color: AppColors.widgets.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: TextFormField(
-                decoration: const InputDecoration(
+              child: const TextField(
+                decoration: InputDecoration(
                     hintText: 'Search',
                     prefixIcon: Icon(Icons.search),
                     suffixIcon: Icon(Icons.cancel_rounded)),
