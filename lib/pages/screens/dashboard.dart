@@ -81,85 +81,80 @@ class Dashboard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
         child: Column(
           children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(20),
-                  color: AppColors.widgets.withOpacity(0.3),
-                ),
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 25, left: 25),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          CircularPercentIndicator(
-                            radius: 50,
-                            lineWidth: 12,
-                            percent: 0.6,
-                            progressColor: AppColors.darkgreen,
-                            backgroundColor: Colors.white,
-                            circularStrokeCap: CircularStrokeCap.round,
-                            center: const Text(
-                              '60%',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.darkgreen),
-                            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.black),
+                borderRadius: BorderRadius.circular(20),
+                color: AppColors.widgets.withOpacity(0.3),
+              ),
+              width: double.infinity,
+              height: 140,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20, left: 35),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        CircularPercentIndicator(
+                          radius: 50,
+                          lineWidth: 10,
+                          percent: 0.6,
+                          progressColor: AppColors.darkgreen,
+                          backgroundColor: Colors.white,
+                          circularStrokeCap: CircularStrokeCap.round,
+                          center: const Text(
+                            '60%',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.darkgreen),
                           ),
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Expanded(
-              //flex: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: [AppColors.darkgreen, AppColors.widgets],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight),
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.darkgreen,
-                ),
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.energy_savings_leaf_outlined,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      const Text(
-                        "Track your Crop!",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Colors.white),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.arrow_forward_rounded),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.pushNamed(context, MyRoutes.mycropsRoute);
-                        },
-                      )
-                    ],
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    colors: [AppColors.darkgreen, AppColors.widgets],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight),
+                borderRadius: BorderRadius.circular(15),
+                color: AppColors.darkgreen,
+              ),
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.energy_savings_leaf_outlined,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    const Text(
+                      "Track your Crop!",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.white),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_forward_rounded),
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.pushNamed(context, MyRoutes.mycropsRoute);
+                      },
+                    )
+                  ],
                 ),
               ),
             ),
@@ -176,122 +171,179 @@ class Dashboard extends StatelessWidget {
               textAlign: TextAlign.left,
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
-            Expanded(
-              flex: 2,
+            SizedBox(
+              height: 348,
               child: SingleChildScrollView(
                 padding: const EdgeInsets.only(left: 10),
-                scrollDirection: Axis.horizontal,
-                child: Row(
+                scrollDirection: Axis.vertical,
+                child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.widgets.withOpacity(0.3),
-                      ),
-                      width: 155,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/temp.png',
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.widgets.withOpacity(0.3),
+                          ),
+                          width: 155,
+                          height: 155,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/temp.png',
+                                ),
+                                const Text(
+                                  'Ambient\nTemperature',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
                             ),
-                            const Text(
-                              'Ambient\nTemperature',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.widgets.withOpacity(0.3),
+                          ),
+                          width: 155,
+                          height: 155,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/humidity.png',
+                                ),
+                                const Text(
+                                  'Ambient\nHumidity',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
-                      width: 30,
+                      height: 20,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.widgets.withOpacity(0.3),
-                      ),
-                      width: 155,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/humidity.png',
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.widgets.withOpacity(0.3),
+                          ),
+                          width: 155,
+                          height: 155,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/moisture.png',
+                                ),
+                                const Text(
+                                  'Soil Moisture',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
                             ),
-                            const Text(
-                              'Ambient\nHumidity',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              flex: 2,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(left: 10),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.widgets.withOpacity(0.3),
-                      ),
-                      width: 155,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/moisture.png',
-                            ),
-                            const Text(
-                              'Soil Moisture',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
+                        const SizedBox(
+                          width: 30,
                         ),
-                      ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.widgets.withOpacity(0.3),
+                          ),
+                          width: 155,
+                          height: 155,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/soiltemp.png',
+                                ),
+                                const Text(
+                                  'Soil Temperature',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
-                      width: 30,
+                      height: 20,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.widgets.withOpacity(0.3),
-                      ),
-                      width: 155,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/soiltemp.png',
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.widgets.withOpacity(0.3),
+                          ),
+                          width: 155,
+                          height: 155,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/moisture.png',
+                                ),
+                                const Text(
+                                  'Soil Moisture',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
                             ),
-                            const Text(
-                              'Soil Temperature',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.widgets.withOpacity(0.3),
+                          ),
+                          width: 155,
+                          height: 155,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/soiltemp.png',
+                                ),
+                                const Text(
+                                  'Soil Temperature',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
