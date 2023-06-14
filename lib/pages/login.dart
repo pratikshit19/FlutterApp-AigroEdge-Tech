@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:design/app_colors.dart';
 import 'package:design/pages/forgot_pass.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../utils/routes.dart';
 
@@ -18,31 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   bool isRememberMe = false;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  late Completer<UserCredential> _completer;
-
-  @override
-  void initState() {
-    super.initState();
-    _completer = Completer<UserCredential>();
-  }
-
-  Future<UserCredential> signInWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      // ignore: avoid_print
-      print('User signed in successfully!');
-      return userCredential;
-    } catch (e) {
-      // ignore: avoid_print
-      print('Sign in error: $e');
-      rethrow;
-    }
-  }
 
   Widget buildHeader(BuildContext context) {
     String name = "";
@@ -94,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
                     setState(() {});
                   },
                   decoration: const InputDecoration(
-                    fillColor: Colors.grey,
                     border: InputBorder.none,
                     hintText: 'Email',
                   ),
@@ -124,7 +96,6 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
-                    fillColor: Colors.grey,
                     border: InputBorder.none,
                     hintText: 'Password',
                   ),
@@ -154,9 +125,6 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       Checkbox(
                         value: isRememberMe,
-                        checkColor: AppColors
-                            .themeColor, // Replace with your desired color
-                        activeColor: Colors.white,
                         onChanged: (value) {
                           setState(() {
                             isRememberMe = value!;
@@ -174,7 +142,6 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.only(left: 50, right: 0, top: 0),
                   alignment: Alignment.topRight,
                   child: TextButton(
-                    // ignore: avoid_print
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -207,25 +174,8 @@ class _LoginPageState extends State<LoginPage> {
         shape: const StadiumBorder(),
         backgroundColor: AppColors.darkgreen, // Replace with your desired color
       ),
-      onPressed: () async {
-        String email = emailController.text.trim();
-        String password = passwordController.text.trim();
-
-        try {
-          UserCredential userCredential =
-              await signInWithEmailAndPassword(email, password);
-
-          _completer.complete(userCredential);
-
-          // ignore: use_build_context_synchronously
-          Navigator.pushNamed(context, MyRoutes.homeRoute);
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Login failed. Please check your credentials.'),
-            ),
-          );
-        }
+      onPressed: () {
+        // TODO: Implement login logic
       },
       child: const Text(
         'Log in',

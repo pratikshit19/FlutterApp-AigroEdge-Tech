@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 /*class Auth {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  
 
   Future<void> registerWithEmailAndPassword(
       String email, String password) async {
@@ -16,6 +16,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 }*/
 
 class Auth {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {
       // Use Firebase Authentication or any other authentication mechanism

@@ -1,4 +1,5 @@
 import 'package:design/pages/screens/analyticsScreen.dart';
+import 'package:design/pages/screens/cameraScreen.dart';
 import 'package:design/pages/screens/dashboard.dart';
 import 'package:design/pages/screens/profileScreen.dart';
 import 'package:design/pages/screens/searchScreen.dart';
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> widgetList = const [
     Dashboard(),
     AnalyticsScreen(),
-    AnalyticsScreen(),
+    CameraScreen(),
     SearchScreen(),
     ProfileScreen(),
   ];

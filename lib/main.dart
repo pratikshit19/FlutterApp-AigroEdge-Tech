@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: isLogin ? const HomePage() : const HomePage(),
+          home: isLogin ? const HomePage() : const LoginPage(),
           routes: {
             MyRoutes.homeRoute: (context) => const HomePage(),
             MyRoutes.loginRoute: (context) => const LoginPage(),
