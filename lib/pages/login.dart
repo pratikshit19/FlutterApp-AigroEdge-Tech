@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:design/app_colors.dart';
 import 'package:design/pages/forgot_pass.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/routes.dart';
@@ -13,9 +15,21 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future<UserCredential> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      return userCredential;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   bool isRememberMe = false;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  Completer<UserCredential> _completer = Completer<UserCredential>();
 
   Widget buildHeader(BuildContext context) {
     String name = "";
@@ -174,8 +188,25 @@ class _LoginPageState extends State<LoginPage> {
         shape: const StadiumBorder(),
         backgroundColor: AppColors.darkgreen, // Replace with your desired color
       ),
-      onPressed: () {
-        // TODO: Implement login logic
+      onPressed: () async {
+        String email = emailController.text.trim();
+        String password = passwordController.text.trim();
+
+        try {
+          UserCredential userCredential =
+              await signInWithEmailAndPassword(email, password);
+
+          _completer.complete(userCredential);
+
+          // ignore: use_build_context_synchronously
+          Navigator.pushNamed(context, MyRoutes.homeRoute);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login failed. Please check your credentials.'),
+            ),
+          );
+        }
       },
       child: const Text(
         'Log in',
