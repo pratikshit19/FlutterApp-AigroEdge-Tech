@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:design/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,23 @@ class _SignupPageState extends State<SignupPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+      addUserDetails(
+        _fullnameController.text.trim(),
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+        _confirmpasswordController.text.trim(),
+      );
     }
+  }
+
+  Future addUserDetails(String fullName, String email, String password,
+      String confirmPassword) async {
+    await FirebaseFirestore.instance.collection('user').add({
+      'Full Name': fullName,
+      'Email': email,
+      'Password': password,
+      'Confirm Password': confirmPassword,
+    });
   }
 
   bool passwordConfirmed() {
