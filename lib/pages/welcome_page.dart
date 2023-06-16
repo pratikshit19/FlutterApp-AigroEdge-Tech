@@ -43,10 +43,10 @@ class WelcomePage extends StatelessWidget {
                     },
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(
-                        vertical: 17,
+                        vertical: 20,
                         horizontal: 130,
                       ),
                       side: const BorderSide(
@@ -64,31 +64,28 @@ class WelcomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  OutlinedButton(
+                  const SizedBox(height: 12),
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.popAndPushNamed(
                         context,
                         MyRoutes.loginRoute,
                       );
                     },
-                    style: OutlinedButton.styleFrom(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.darkgreen,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(
-                        vertical: 17,
+                        vertical: 20,
                         horizontal: 140,
-                      ),
-                      side: const BorderSide(
-                        color: AppColors.themeColor,
-                        width: 2,
                       ),
                     ),
                     child: const Text(
                       "Login",
                       style: TextStyle(
-                        color: AppColors.themeColor,
+                        color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,

@@ -58,7 +58,7 @@ class MyCrops extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.widgets.withOpacity(0.2),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 150,
                         width: double.infinity,
                         child: Padding(
@@ -138,7 +138,7 @@ class MyCrops extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.widgets.withOpacity(0.2),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 150,
                         width: double.infinity,
                         child: Padding(
@@ -218,7 +218,7 @@ class MyCrops extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.widgets.withOpacity(0.2),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 150,
                         width: double.infinity,
                         child: Padding(
@@ -298,7 +298,7 @@ class MyCrops extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.widgets.withOpacity(0.2),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 150,
                         width: double.infinity,
                         child: Padding(
@@ -378,7 +378,7 @@ class MyCrops extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.widgets.withOpacity(0.2),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 150,
                         width: double.infinity,
                         child: Padding(
@@ -458,7 +458,7 @@ class MyCrops extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.widgets.withOpacity(0.2),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 150,
                         width: double.infinity,
                         child: Padding(

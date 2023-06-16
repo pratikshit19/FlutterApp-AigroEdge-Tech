@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:design/main_page.dart';
 import 'package:design/pages/home/home.dart';
 import 'package:design/pages/login.dart';
 import 'package:design/pages/mycrops.dart';
@@ -8,7 +9,6 @@ import 'package:design/pages/screens/profileScreen.dart';
 import 'package:design/pages/signup_page.dart';
 import 'package:design/pages/welcome_page.dart';
 import 'package:design/utils/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -18,32 +18,8 @@ Future main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  var auth = FirebaseAuth.instance;
-  var isLogin = false;
-
-  checkIfLogin() async {
-    auth.authStateChanges().listen((User? user) {
-      if (user != null && mounted) {
-        setState(() {
-          isLogin = true;
-        });
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    checkIfLogin();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +31,13 @@ class _MyAppState extends State<MyApp> {
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: isLogin ? const HomePage() : const LoginPage(),
+          home: const MainPage(),
           routes: {
             MyRoutes.homeRoute: (context) => const HomePage(),
             MyRoutes.loginRoute: (context) => const LoginPage(),
             MyRoutes.signupRoute: (context) => const SignupPage(),
             MyRoutes.welcomeRoute: (context) => const WelcomePage(),
-            MyRoutes.dashboardRoute: (context) => const Dashboard(),
+            MyRoutes.dashboardRoute: (context) => Dashboard(),
             MyRoutes.mycropsRoute: (context) => const MyCrops(),
             MyRoutes.profileRoute: (context) => const ProfileScreen(),
           },

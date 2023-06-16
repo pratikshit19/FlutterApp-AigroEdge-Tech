@@ -1,10 +1,13 @@
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  Dashboard({Key? key}) : super(key: key);
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +58,16 @@ class Dashboard extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 60,
-        leading: IconButton(
-          color: Colors.black,
-          onPressed: () {
-            Scaffold.of(context).openDrawer(); // Open the drawer
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              color: Colors.black,
+              onPressed: () {
+                Scaffold.of(context).openDrawer(); // Open the drawer
+              },
+              icon: const Icon(Icons.menu),
+            );
           },
-          icon: const Icon(Icons.menu),
         ),
         title: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 85),
@@ -83,9 +90,8 @@ class Dashboard extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.black),
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.widgets.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(15),
+                color: AppColors.textfields.withOpacity(0.3),
               ),
               width: double.infinity,
               height: 140,
@@ -116,50 +122,56 @@ class Dashboard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                    colors: [AppColors.darkgreen, AppColors.widgets],
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, MyRoutes.mycropsRoute);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [AppColors.darkgreen, AppColors.textfields],
                     begin: Alignment.topLeft,
-                    end: Alignment.bottomRight),
-                borderRadius: BorderRadius.circular(15),
-                color: AppColors.darkgreen,
-              ),
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.energy_savings_leaf_outlined,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    const Text(
-                      "Track your Crop!",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: Colors.white),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(Icons.arrow_forward_rounded),
-                      color: Colors.white,
-                      onPressed: () {
-                        Navigator.pushNamed(context, MyRoutes.mycropsRoute);
-                      },
-                    )
-                  ],
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.darkgreen,
+                ),
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.grass,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      const Text(
+                        "Track your Crop!",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Colors.white),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_forward_rounded),
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.pushNamed(context, MyRoutes.mycropsRoute);
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 35,
             ),
             const Text(
               "Features",
@@ -176,7 +188,7 @@ class Dashboard extends StatelessWidget {
             SizedBox(
               height: 348,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
@@ -185,10 +197,10 @@ class Dashboard extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: AppColors.widgets.withOpacity(0.3),
+                            color: AppColors.textfields.withOpacity(0.3),
                           ),
-                          width: 155,
-                          height: 155,
+                          width: 165,
+                          height: 165,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Column(
@@ -206,15 +218,15 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: 30,
+                          width: 15,
                         ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: AppColors.widgets.withOpacity(0.3),
+                            color: AppColors.textfields.withOpacity(0.3),
                           ),
-                          width: 155,
-                          height: 155,
+                          width: 165,
+                          height: 165,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Column(
@@ -234,17 +246,17 @@ class Dashboard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     Row(
                       children: [
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: AppColors.widgets.withOpacity(0.3),
+                            color: AppColors.textfields.withOpacity(0.3),
                           ),
-                          width: 155,
-                          height: 155,
+                          width: 165,
+                          height: 165,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Column(
@@ -262,15 +274,15 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: 30,
+                          width: 15,
                         ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: AppColors.widgets.withOpacity(0.3),
+                            color: AppColors.textfields.withOpacity(0.3),
                           ),
-                          width: 155,
-                          height: 155,
+                          width: 165,
+                          height: 165,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Column(
@@ -290,17 +302,17 @@ class Dashboard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     Row(
                       children: [
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: AppColors.widgets.withOpacity(0.3),
+                            color: AppColors.textfields.withOpacity(0.3),
                           ),
-                          width: 155,
-                          height: 155,
+                          width: 165,
+                          height: 165,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Column(
@@ -318,15 +330,15 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: 30,
+                          width: 15,
                         ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: AppColors.widgets.withOpacity(0.3),
+                            color: AppColors.textfields.withOpacity(0.3),
                           ),
-                          width: 155,
-                          height: 155,
+                          width: 165,
+                          height: 165,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Column(

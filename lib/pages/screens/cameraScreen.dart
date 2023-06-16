@@ -33,6 +33,7 @@ class _CameraScreenState extends State<CameraScreen> {
       }
       setState(() {});
     }).catchError((e) {
+      // ignore: avoid_print
       print(e);
     });
   }

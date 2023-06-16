@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -104,7 +105,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: ElevatedButton.styleFrom(
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
-                    shape: const StadiumBorder(),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                     backgroundColor: AppColors.darkgreen,
                   ),
                   onPressed: () async {},
@@ -123,10 +125,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.widgets.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.2),
                   ),
                   width: screenWidth,
-                  height: 50,
+                  height: 55,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
@@ -153,14 +155,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.widgets.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.2),
                   ),
                   width: screenWidth,
-                  height: 50,
+                  height: 55,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
@@ -189,14 +191,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.widgets.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.2),
                   ),
                   width: screenWidth,
-                  height: 50,
+                  height: 55,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
@@ -223,14 +225,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.widgets.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.2),
                   ),
                   width: screenWidth,
-                  height: 50,
+                  height: 55,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
@@ -257,14 +259,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.widgets.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.2),
                   ),
                   width: screenWidth,
-                  height: 50,
+                  height: 55,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
@@ -293,13 +295,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   titlePadding: const EdgeInsets.all(10),
                                   alignment: Alignment.center,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
+                                      borderRadius: BorderRadius.circular(25)),
                                   title: const Text(
                                     "Logout",
                                     textAlign: TextAlign.center,
                                   ),
                                   content: const Text(
-                                      "Are you sure you want to logout?"),
+                                    "Are you sure you want to logout?",
+                                    textAlign: TextAlign.center,
+                                  ),
                                   actions: [
                                     const SizedBox(
                                       width: 10,
@@ -308,7 +312,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       style: ElevatedButton.styleFrom(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 16),
-                                        shape: const StadiumBorder(),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                         backgroundColor: AppColors.darkgreen,
                                       ),
                                       onPressed: () =>
@@ -322,14 +328,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       style: ElevatedButton.styleFrom(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 16),
-                                        shape: const StadiumBorder(),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                         backgroundColor: AppColors.darkgreen,
                                       ),
-                                      onPressed: _logout,
+                                      onPressed: () async {
+                                        await FirebaseAuth.instance.signOut();
+                                        Navigator.of(context)
+                                            .pushNamed(MyRoutes.loginRoute);
+                                      },
                                       child: const Text("Logout"),
                                     ),
                                     const SizedBox(
-                                      width: 100,
+                                      width: 40,
                                     ),
                                   ],
                                 );

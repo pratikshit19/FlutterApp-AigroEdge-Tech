@@ -4,6 +4,7 @@ import 'package:design/pages/screens/dashboard.dart';
 import 'package:design/pages/screens/profileScreen.dart';
 import 'package:design/pages/screens/searchScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,13 +14,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final User? user = FirebaseAuth.instance.currentUser;
   int myIndex = 0;
-  List<Widget> widgetList = const [
+  List<Widget> widgetList = [
     Dashboard(),
-    AnalyticsScreen(),
-    CameraScreen(),
-    SearchScreen(),
-    ProfileScreen(),
+    const AnalyticsScreen(),
+    const CameraScreen(),
+    const SearchScreen(),
+    const ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
