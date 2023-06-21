@@ -14,11 +14,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  Query dbRef = FirebaseDatabase.instance
-      .ref()
-      .child('WiFi_Devices')
-      .child('AE01')
-      .child('Last Update');
   final User? user = FirebaseAuth.instance.currentUser;
 
   String? selectedValue;
@@ -202,43 +197,8 @@ class _DashboardState extends State<Dashboard> {
               height: 10,
             ),
             Expanded(
-                child: StreamBuilder(
-              stream: dbRef.onValue,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  final data = snapshot.data?.snapshot?.value;
-
-                  if (data != null && data is Map<dynamic, dynamic>) {
-                    final List<dynamic> values = data.values.toList();
-                    final List<dynamic> keys = data.keys.toList();
-
-                    return ListView.builder(
-                      itemCount: values.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final dynamic ae01 = values[index];
-
-                        if (ae01 != null && ae01 is Map<dynamic, dynamic>) {
-                          ae01['key'] = keys[index];
-                          return buildWidget(context, ae01: ae01);
-                        } else {
-                          print('Invalid data format at index $index');
-                          print('Data structure at index $index: $ae01');
-                          return Container(); // or any other appropriate fallback UI
-                        }
-                      },
-                    );
-                  } else {
-                    print('Invalid data format: $data');
-                    return Text('Invalid data format');
-                  }
-                } else if (snapshot.hasError) {
-                  print('Error: ${snapshot.error}');
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            )),
+              child: buildWidget(context),
+            ),
           ],
         ),
       ),
@@ -246,426 +206,573 @@ class _DashboardState extends State<Dashboard> {
   }
 }
 
-Widget buildWidget(BuildContext context, {required Map ae01}) {
-  return SizedBox(
-    height: 354,
-    child: SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
-                ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, right: 80),
-                    child: Column(
-                      children: [
-                        const Text(
-                          "Battery:",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 3, left: 85),
-                          child: CircularPercentIndicator(
-                            radius: 50,
-                            lineWidth: 7,
-                            percent: 0.6,
-                            progressColor: AppColors.darkgreen,
-                            backgroundColor: Colors.white,
-                            circularStrokeCap: CircularStrokeCap.round,
-                            center: Text(
-                              ae01['BT'],
-                              style: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.darkgreen),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
-                ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
+Widget buildWidget(BuildContext context) {
+  final DatabaseReference databaseReference = FirebaseDatabase.instance
+      .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com')
+      .child('WiFi_Devices')
+      .child('AE01')
+      .child('Last Update');
+
+  return StreamBuilder(
+    stream: databaseReference.onValue,
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        final data = snapshot.data!.snapshot.value;
+
+        return SizedBox(
+          height: 354,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, right: 80),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                'Soil pH:',
+                                "Battery:",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
                                 ),
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 10,
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 35, left: 35),
-                                child: Text(
-                                  ae01['PH'],
-                                  style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
+                                    const EdgeInsets.only(top: 3, left: 85),
+                                child: CircularPercentIndicator(
+                                  radius: 50,
+                                  lineWidth: 7,
+                                  percent: data != null
+                                      ? (double.tryParse((data as Map<dynamic,
+                                                      dynamic>)['BT']
+                                                  .toString()) ??
+                                              0.0) /
+                                          100.0
+                                      : 0.0,
+                                  progressColor: AppColors.darkgreen,
+                                  backgroundColor: Colors.white,
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  center: const Text(
+                                    'BT',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.darkgreen,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/moisture.png',
-                              height: 35,
-                              width: 35,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
-                ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Soil Temperature:',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 35, left: 35),
-                                child: Text(
-                                  ae01['ST'],
-                                  style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 15),
+                          child: StreamBuilder(
+                            stream: databaseReference.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final data = snapshot.data!.snapshot.value;
+                                final soilPH = data != null
+                                    ? (data as Map<dynamic, dynamic>)['PH']
+                                    : '';
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Soil pH:',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 35, left: 35),
+                                      child: Text(
+                                        soilPH,
+                                        style: const TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
+                const SizedBox(
+                  height: 15,
                 ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Soil Moisture:',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 35, left: 35),
-                                child: Text(
-                                  ae01['SM'],
-                                  style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
+                Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 15),
+                          child: StreamBuilder(
+                            stream: databaseReference.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final data = snapshot.data!.snapshot.value;
+                                final soilTemperature = data != null
+                                    ? (data as Map<dynamic, dynamic>)['ST']
+                                        as String
+                                    : '';
+
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Soil Temperature:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 35, left: 35),
+                                            child: Text(
+                                              soilTemperature,
+                                              style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
-                ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Electrical \nConductivity:',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 35, left: 35),
-                                child: Text(
-                                  ae01['EC'],
-                                  style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 15),
+                          child: StreamBuilder(
+                            stream: databaseReference.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final data = snapshot.data!.snapshot.value;
+                                final soilMoisture = data != null
+                                    ? (data as Map<dynamic, dynamic>)['SM']
+                                        as String
+                                    : '';
+
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Soil Moisture:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 35, left: 35),
+                                            child: Text(
+                                              soilMoisture,
+                                              style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
+                const SizedBox(
+                  height: 15,
                 ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Epoch Time:',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 35, left: 35),
-                                child: Text(
-                                  ae01['DT'],
-                                  style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
+                Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 15),
+                          child: StreamBuilder(
+                            stream: databaseReference.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final data = snapshot.data!.snapshot.value;
+                                final electricalConductivity = data != null
+                                    ? (data as Map<dynamic, dynamic>)['EC']
+                                        as String
+                                    : '';
+
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Electrical \nConductivity:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 35, left: 35),
+                                            child: Text(
+                                              electricalConductivity,
+                                              style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
-                ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Humidity:',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 35, left: 35),
-                                child: Text(
-                                  ae01['H'],
-                                  style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 15),
+                          child: StreamBuilder(
+                            stream: databaseReference.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final data = snapshot.data!.snapshot.value;
+                                final epochTime = data != null &&
+                                        (data as Map<dynamic, dynamic>)['DT'] !=
+                                            null
+                                    ? (data)['DT'].toString()
+                                    : '';
+
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Epoch Time:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 35, left: 5),
+                                            child: Text(
+                                              epochTime,
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textfields.withOpacity(0.3),
+                const SizedBox(
+                  height: 15,
                 ),
-                child: SizedBox(
-                  height: 165,
-                  width: 165,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Lite Intensity:',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 35, left: 35),
-                                child: Text(
-                                  ae01['LI'],
-                                  style: const TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
+                Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 15),
+                          child: StreamBuilder(
+                            stream: databaseReference.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final data = snapshot.data!.snapshot.value;
+                                final humidity = data != null &&
+                                        (data as Map<dynamic, dynamic>)['H'] !=
+                                            null
+                                    ? data['H'].toString()
+                                    : '';
+
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Humidity:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 35, left: 35),
+                                            child: Text(
+                                              humidity,
+                                              style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      child: SizedBox(
+                        height: 165,
+                        width: 165,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 15),
+                          child: StreamBuilder(
+                            stream: databaseReference.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final data = snapshot.data!.snapshot.value;
+                                final lightIntensity = data != null &&
+                                        (data as Map<dynamic, dynamic>)['LI'] !=
+                                            null
+                                    ? data['LI'].toString()
+                                    : '';
+
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Lite Intensity:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 35, left: 35),
+                                            child: Text(
+                                              lightIntensity,
+                                              style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ],
-      ),
-    ),
+        );
+      } else if (snapshot.hasError) {
+        return Text('Error: ${snapshot.error}');
+      } else {
+        return const CircularProgressIndicator();
+      }
+    },
   );
 }
