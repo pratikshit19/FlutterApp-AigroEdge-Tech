@@ -202,31 +202,43 @@ class _DashboardState extends State<Dashboard> {
               height: 10,
             ),
             Expanded(
-              child: StreamBuilder(
-                stream: dbRef.onValue,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    // Handle the data snapshot here
-                    // Access the data using snapshot.data
+                child: StreamBuilder(
+              stream: dbRef.onValue,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  final data = snapshot.data?.snapshot?.value;
+
+                  if (data != null && data is Map<dynamic, dynamic>) {
+                    final List<dynamic> values = data.values.toList();
+                    final List<dynamic> keys = data.keys.toList();
+
                     return ListView.builder(
-                      itemCount: snapshot.data.snapshot.value.length,
+                      itemCount: values.length,
                       itemBuilder: (BuildContext context, int index) {
-                        // Retrieve your data using snapshot.data and index
-                        Map ae01 = snapshot.data.snapshot.value[index] as Map;
-                        ae01['key'] = snapshot.data.snapshot.key;
-                        return buildWidget(context, ae01: ae01);
+                        final dynamic ae01 = values[index];
+
+                        if (ae01 != null && ae01 is Map<dynamic, dynamic>) {
+                          ae01['key'] = keys[index];
+                          return buildWidget(context, ae01: ae01);
+                        } else {
+                          print('Invalid data format at index $index');
+                          print('Data structure at index $index: $ae01');
+                          return Container(); // or any other appropriate fallback UI
+                        }
                       },
                     );
-                  } else if (snapshot.hasError) {
-                    // Handle the error here
-                    return Text('Error: ${snapshot.error}');
                   } else {
-                    // Show a loading indicator while fetching the data
-                    return const CircularProgressIndicator();
+                    print('Invalid data format: $data');
+                    return Text('Invalid data format');
                   }
-                },
-              ),
-            ),
+                } else if (snapshot.hasError) {
+                  print('Error: ${snapshot.error}');
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            )),
           ],
         ),
       ),
