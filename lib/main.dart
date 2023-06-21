@@ -4,6 +4,7 @@ import 'package:design/main_page.dart';
 import 'package:design/pages/home/home.dart';
 import 'package:design/pages/login.dart';
 import 'package:design/pages/mycrops.dart';
+import 'package:design/pages/screens/addfarm.dart';
 import 'package:design/pages/screens/dashboard.dart';
 import 'package:design/pages/screens/profileScreen.dart';
 import 'package:design/pages/signup_page.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.dashboardRoute: (context) => Dashboard(),
             MyRoutes.mycropsRoute: (context) => const MyCrops(),
             MyRoutes.profileRoute: (context) => const ProfileScreen(),
+            MyRoutes.addfarmRoute: (context) => const AddFarmScreen(),
           },
           builder: (context, child) {
             return MediaQuery(

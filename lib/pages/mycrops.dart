@@ -40,7 +40,7 @@ class MyCrops extends StatelessWidget {
             labelColor: Colors.black,
             labelStyle: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-            indicatorColor: AppColors.widgets,
+            indicatorColor: AppColors.textfields,
           ),
         ),
         body: Stack(
@@ -56,87 +56,7 @@ class MyCrops extends StatelessWidget {
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: AppColors.widgets.withOpacity(0.2),
-                      ),
-                      child: SizedBox(
-                        height: 150,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 30, left: 35),
-                          child: Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Image.asset(
-                                    'assets/images/rice.png',
-                                    height: 65,
-                                    width: 65,
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  const Text(
-                                    'Rice',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 40,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Installation date:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'Current pH:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'Sowing:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'Suggestions:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: AppColors.widgets.withOpacity(0.2),
+                        color: AppColors.textfields.withOpacity(0.3),
                       ),
                       child: SizedBox(
                         height: 150,
@@ -216,7 +136,7 @@ class MyCrops extends StatelessWidget {
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: AppColors.widgets.withOpacity(0.2),
+                        color: AppColors.textfields.withOpacity(0.3),
                       ),
                       child: SizedBox(
                         height: 150,
@@ -296,7 +216,7 @@ class MyCrops extends StatelessWidget {
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: AppColors.widgets.withOpacity(0.2),
+                        color: AppColors.textfields.withOpacity(0.3),
                       ),
                       child: SizedBox(
                         height: 150,
@@ -376,7 +296,7 @@ class MyCrops extends StatelessWidget {
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: AppColors.widgets.withOpacity(0.2),
+                        color: AppColors.textfields.withOpacity(0.3),
                       ),
                       child: SizedBox(
                         height: 150,
@@ -456,7 +376,7 @@ class MyCrops extends StatelessWidget {
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: AppColors.widgets.withOpacity(0.2),
+                        color: AppColors.textfields.withOpacity(0.3),
                       ),
                       child: SizedBox(
                         height: 150,

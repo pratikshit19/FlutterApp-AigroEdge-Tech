@@ -6,4 +6,5 @@ class MyRoutes {
   static String dashboardRoute = "/dashboard";
   static String mycropsRoute = "/mycrops";
   static String profileRoute = "/profile";
+  static String addfarmRoute = "/addfarm";
 }

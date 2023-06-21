@@ -125,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.3),
                   ),
                   width: screenWidth,
                   height: 55,
@@ -159,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.3),
                   ),
                   width: screenWidth,
                   height: 55,
@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.3),
                   ),
                   width: screenWidth,
                   height: 55,
@@ -229,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.3),
                   ),
                   width: screenWidth,
                   height: 55,
@@ -263,7 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.2),
+                    color: AppColors.textfields.withOpacity(0.3),
                   ),
                   width: screenWidth,
                   height: 55,

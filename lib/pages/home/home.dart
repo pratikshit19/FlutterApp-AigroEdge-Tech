@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF4F4F2),
+      backgroundColor: Colors.grey.shade600,
       body: Center(
         child: widgetList[myIndex],
       ),

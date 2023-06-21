@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "229436834072",
+    "firebase_url": "https://sigfox-4a13d-default-rtdb.firebaseio.com",
+    "project_id": "sigfox-4a13d",
+    "storage_bucket": "sigfox-4a13d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229436834072:android:0a02fd5867240031c0de6d",
+        "android_client_info": {
+          "package_name": "com.example.design"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229436834072-67oij159mp06amhu6a60mm9u96aqht7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM4vCAlBMIvNnX0yBf8FdAt1D20TyNK3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229436834072-67oij159mp06amhu6a60mm9u96aqht7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
