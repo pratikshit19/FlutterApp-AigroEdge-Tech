@@ -253,27 +253,46 @@ Widget buildWidget(BuildContext context) {
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 3, left: 85),
-                                child: CircularPercentIndicator(
-                                  radius: 50,
-                                  lineWidth: 7,
-                                  percent: data != null
-                                      ? (double.tryParse((data as Map<dynamic,
-                                                      dynamic>)['BT']
-                                                  .toString()) ??
-                                              0.0) /
-                                          100.0
-                                      : 0.0,
-                                  progressColor: AppColors.darkgreen,
-                                  backgroundColor: Colors.white,
-                                  circularStrokeCap: CircularStrokeCap.round,
-                                  center: const Text(
-                                    'BT',
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.darkgreen,
-                                    ),
-                                  ),
+                                child: StreamBuilder(
+                                  stream: databaseReference.onValue,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      final data =
+                                          snapshot.data!.snapshot.value;
+                                      final batteryData = data != null &&
+                                              (data as Map<dynamic, dynamic>)[
+                                                      'BT'] !=
+                                                  null
+                                          ? data['BT'].toString()
+                                          : '';
+
+                                      return CircularPercentIndicator(
+                                        radius: 50,
+                                        lineWidth: 7,
+                                        percent: data != null
+                                            ? (double.tryParse(batteryData) ??
+                                                    0.0) /
+                                                100.0
+                                            : 0.0,
+                                        progressColor: AppColors.darkgreen,
+                                        backgroundColor: Colors.white,
+                                        circularStrokeCap:
+                                            CircularStrokeCap.round,
+                                        center: Text(
+                                          batteryData,
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.darkgreen,
+                                          ),
+                                        ),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    } else {
+                                      return const CircularProgressIndicator();
+                                    }
+                                  },
                                 ),
                               ),
                             ],
