@@ -3,6 +3,7 @@ import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -24,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -50,312 +52,418 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            final double screenWidth = constraints.maxWidth;
-            final bool isSmallScreen = screenWidth < 600;
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              final double screenWidth = constraints.maxWidth;
+              final bool isSmallScreen = screenWidth < 600;
 
-            return Column(
-              children: [
-                SizedBox(
-                  height: isSmallScreen ? 80 : 100,
-                  width: isSmallScreen ? 80 : 100,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 2),
-                          shape: BoxShape.circle,
-                          color: Colors.grey.withOpacity(0.3),
+              return Column(
+                children: [
+                  SizedBox(
+                    height: isSmallScreen ? 80 : 100,
+                    width: isSmallScreen ? 80 : 100,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            shape: BoxShape.circle,
+                            color: Colors.grey.withOpacity(0.3),
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black54,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.edit,
-                              color: Colors.white,
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.black54,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Full Name",
+                    style: GoogleFonts.judson(
+                        fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    "@Username",
+                    style:
+                        TextStyle(fontWeight: FontWeight.normal, fontSize: 10),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      backgroundColor: AppColors.darkgreen,
+                    ),
+                    onPressed: () async {},
+                    child: Text(
+                      'Edit Profile',
+                      style: TextStyle(fontSize: isSmallScreen ? 12 : 14),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    "_____________________________________",
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-2, -2),
+                            blurRadius: 3,
+                            spreadRadius: 1),
+                      ],
+                    ),
+                    width: screenWidth,
+                    height: 55,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.library_books_outlined,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(width: 15),
+                          Text(
+                            "Knowledge Base",
+                            style: GoogleFonts.judson(
+                                fontWeight: FontWeight.normal, fontSize: 15),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward_rounded),
+                            color: Colors.black,
+                            onPressed: () {},
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Full Name",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  "@Username",
-                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 10),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    backgroundColor: AppColors.darkgreen,
-                  ),
-                  onPressed: () async {},
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(fontSize: isSmallScreen ? 12 : 14),
-                  ),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  "_____________________________________",
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.grey),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.3),
-                  ),
-                  width: screenWidth,
-                  height: 55,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.shield,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(width: 15),
-                        const Text(
-                          "Privacy Policy",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: Colors.black),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_rounded),
-                          color: Colors.black,
-                          onPressed: () {},
-                        ),
-                      ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.3),
-                  ),
-                  width: screenWidth,
-                  height: 55,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.energy_savings_leaf_rounded,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(width: 15),
-                        const Text(
-                          "My Crops",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: Colors.black),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_rounded),
-                          color: Colors.black,
-                          onPressed: () {
-                            Navigator.pushNamed(context, MyRoutes.mycropsRoute);
-                          },
-                        ),
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-2, -2),
+                            blurRadius: 3,
+                            spreadRadius: 1),
                       ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.3),
-                  ),
-                  width: screenWidth,
-                  height: 55,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.help_center_rounded,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(width: 15),
-                        const Text(
-                          "Help Centre",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: Colors.black),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_rounded),
-                          color: Colors.black,
-                          onPressed: () {},
-                        ),
-                      ],
+                    width: screenWidth,
+                    height: 55,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.shield,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(width: 15),
+                          Text(
+                            "Privacy Policy",
+                            style: GoogleFonts.judson(
+                                fontWeight: FontWeight.normal, fontSize: 15),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward_rounded),
+                            color: Colors.black,
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.3),
-                  ),
-                  width: screenWidth,
-                  height: 55,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.rate_review_rounded,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(width: 15),
-                        const Text(
-                          "Rate Us",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: Colors.black),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_rounded),
-                          color: Colors.black,
-                          onPressed: () {},
-                        ),
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-2, -2),
+                            blurRadius: 3,
+                            spreadRadius: 1),
                       ],
                     ),
+                    width: screenWidth,
+                    height: 55,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.energy_savings_leaf_rounded,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(width: 15),
+                          const Text(
+                            "My Devices",
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward_rounded),
+                            color: Colors.black,
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, MyRoutes.mydevicesRoute);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.textfields.withOpacity(0.3),
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-2, -2),
+                            blurRadius: 3,
+                            spreadRadius: 1),
+                      ],
+                    ),
+                    width: screenWidth,
+                    height: 55,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.help_center_rounded,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(width: 15),
+                          const Text(
+                            "Help Centre",
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward_rounded),
+                            color: Colors.black,
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  width: screenWidth,
-                  height: 55,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.power_settings_new,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(width: 15),
-                        const Text(
-                          "Log Out",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: Colors.black),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_rounded),
-                          color: Colors.black,
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  titlePadding: const EdgeInsets.all(10),
-                                  alignment: Alignment.center,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25)),
-                                  title: const Text(
-                                    "Logout",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  content: const Text(
-                                    "Are you sure you want to logout?",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  actions: [
-                                    const SizedBox(
-                                      width: 10,
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-2, -2),
+                            blurRadius: 3,
+                            spreadRadius: 1),
+                      ],
+                    ),
+                    width: screenWidth,
+                    height: 55,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.rate_review_rounded,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(width: 15),
+                          const Text(
+                            "Rate Us",
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward_rounded),
+                            color: Colors.black,
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-2, -2),
+                            blurRadius: 3,
+                            spreadRadius: 1),
+                      ],
+                    ),
+                    width: screenWidth,
+                    height: 55,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.power_settings_new,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(width: 15),
+                          const Text(
+                            "Log Out",
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward_rounded),
+                            color: Colors.black,
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    titlePadding: const EdgeInsets.all(10),
+                                    alignment: Alignment.center,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    title: const Text(
+                                      "Logout",
+                                      textAlign: TextAlign.center,
                                     ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 16),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        backgroundColor: AppColors.darkgreen,
+                                    content: const Text(
+                                      "Are you sure you want to logout?",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    actions: [
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                      child: const Text("Cancel"),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 16),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        backgroundColor: AppColors.darkgreen,
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5, horizontal: 16),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          backgroundColor: AppColors.darkgreen,
+                                        ),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: const Text("Cancel"),
                                       ),
-                                      onPressed: () async {
-                                        await FirebaseAuth.instance.signOut();
-                                        Navigator.of(context)
-                                            .pushNamed(MyRoutes.loginRoute);
-                                      },
-                                      child: const Text("Logout"),
-                                    ),
-                                    const SizedBox(
-                                      width: 40,
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5, horizontal: 16),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          backgroundColor: AppColors.darkgreen,
+                                        ),
+                                        onPressed: () async {
+                                          await FirebaseAuth.instance.signOut();
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.of(context)
+                                              .pushNamed(MyRoutes.loginRoute);
+                                        },
+                                        child: const Text("Logout"),
+                                      ),
+                                      const SizedBox(
+                                        width: 40,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

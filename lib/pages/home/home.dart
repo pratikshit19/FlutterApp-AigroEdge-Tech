@@ -1,3 +1,4 @@
+import 'package:design/app_colors.dart';
 import 'package:design/pages/screens/analyticsScreen.dart';
 import 'package:design/pages/screens/cameraScreen.dart';
 import 'package:design/pages/screens/dashboard.dart';
@@ -5,6 +6,7 @@ import 'package:design/pages/screens/profileScreen.dart';
 import 'package:design/pages/screens/searchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,7 +22,6 @@ class _HomePageState extends State<HomePage> {
     Dashboard(),
     const AnalyticsScreen(),
     const CameraScreen(),
-    const SearchScreen(),
     const ProfileScreen(),
   ];
   @override
@@ -30,60 +31,27 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: widgetList[myIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          setState(() {
-            myIndex = index;
-          });
-        },
-        currentIndex: myIndex,
-        type: BottomNavigationBarType.shifting,
-        selectedItemColor: Colors.black,
-        unselectedLabelStyle: const TextStyle(
-          color: Colors.black,
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          child: GNav(
+              onTabChange: (index) {
+                setState(() {
+                  myIndex = index;
+                });
+              },
+              padding: const EdgeInsets.all(12),
+              gap: 5,
+              backgroundColor: Colors.white,
+              tabBackgroundColor: AppColors.textfields.withOpacity(0.3),
+              tabs: const [
+                GButton(icon: Icons.home, text: 'Home'),
+                GButton(icon: Icons.analytics, text: 'Analytics'),
+                GButton(icon: Icons.camera, text: 'Camera'),
+                GButton(icon: Icons.person, text: 'Profile'),
+              ]),
         ),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.black,
-              size: 35,
-            ),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.analytics,
-              color: Colors.black,
-              size: 35,
-            ),
-            label: 'Analytics',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.camera_alt_rounded,
-              color: Colors.black,
-              size: 35,
-            ),
-            label: 'Camera',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              color: Colors.black,
-              size: 35,
-            ),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: Colors.black,
-              size: 35,
-            ),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key? key}) : super(key: key);
@@ -40,25 +41,37 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             ListTile(
-              title: const Text('Add Farm'),
+              title: Text(
+                'My Farm',
+                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+              ),
               onTap: () {
-                Navigator.pushNamed(context, MyRoutes.addfarmRoute);
+                Navigator.pushNamed(context, MyRoutes.myfarmRoute);
               },
             ),
             ListTile(
-              title: const Text('Add Device'),
+              title: Text(
+                'My Devices',
+                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, MyRoutes.mydevicesRoute);
+              },
+            ),
+            ListTile(
+              title: Text(
+                'History',
+                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+              ),
               onTap: () {
                 // Add your logic for handling item 1 tap
               },
             ),
             ListTile(
-              title: const Text('History'),
-              onTap: () {
-                // Add your logic for handling item 1 tap
-              },
-            ),
-            ListTile(
-              title: const Text('Settings'),
+              title: Text(
+                'Settings',
+                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+              ),
               onTap: () {
                 // Add your logic for handling item 1 tap
               },
@@ -81,11 +94,12 @@ class _DashboardState extends State<Dashboard> {
             );
           },
         ),
-        title: const Padding(
+        title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 85),
           child: Text(
             'AigroCare',
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.judson(
+                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
         actions: [
@@ -119,7 +133,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, MyRoutes.mycropsRoute);
+                //Navigator.pushNamed(context, MyRoutes.mycropsRoute);
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -149,6 +163,7 @@ class _DashboardState extends State<Dashboard> {
                               selectedValue = newValue;
                             });
                           },
+
                           icon: const Icon(
                             Icons.arrow_drop_down,
                             color: Colors.white,
@@ -165,14 +180,6 @@ class _DashboardState extends State<Dashboard> {
                       const SizedBox(
                         width: 100,
                       ),
-                      const Text(
-                        "Track your Crop!",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Colors.white),
-                      ),
-                      const Spacer(),
                     ],
                   ),
                 ),
@@ -181,15 +188,12 @@ class _DashboardState extends State<Dashboard> {
             const SizedBox(
               height: 35,
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 0, right: 185),
               child: Text(
                 "Device Updates",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: GoogleFonts.judson(
+                    fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -220,7 +224,7 @@ Widget buildWidget(BuildContext context) {
         final data = snapshot.data!.snapshot.value;
 
         return SizedBox(
-          height: 354,
+          height: 355,
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             scrollDirection: Axis.vertical,
@@ -243,7 +247,6 @@ Widget buildWidget(BuildContext context) {
                               const Text(
                                 "Battery:",
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
                                   fontSize: 15,
                                 ),
                               ),
@@ -251,8 +254,7 @@ Widget buildWidget(BuildContext context) {
                                 height: 10,
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 3, left: 85),
+                                padding: const EdgeInsets.only(left: 82),
                                 child: StreamBuilder(
                                   stream: databaseReference.onValue,
                                   builder: (context, snapshot) {
@@ -267,8 +269,8 @@ Widget buildWidget(BuildContext context) {
                                           : '';
 
                                       return CircularPercentIndicator(
-                                        radius: 50,
-                                        lineWidth: 7,
+                                        radius: 55,
+                                        lineWidth: 9,
                                         percent: data != null
                                             ? (double.tryParse(batteryData) ??
                                                     0.0) /
@@ -278,12 +280,14 @@ Widget buildWidget(BuildContext context) {
                                         backgroundColor: Colors.white,
                                         circularStrokeCap:
                                             CircularStrokeCap.round,
-                                        center: Text(
-                                          batteryData,
-                                          style: const TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.darkgreen,
+                                        center: Center(
+                                          child: Text(
+                                            '$batteryData%',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.darkgreen,
+                                            ),
                                           ),
                                         ),
                                       );
@@ -328,7 +332,6 @@ Widget buildWidget(BuildContext context) {
                                     const Text(
                                       'Soil pH:',
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
                                     ),
@@ -397,7 +400,6 @@ Widget buildWidget(BuildContext context) {
                                           const Text(
                                             'Soil Temperature:',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -465,7 +467,6 @@ Widget buildWidget(BuildContext context) {
                                           const Text(
                                             'Soil Moisture:',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -537,7 +538,6 @@ Widget buildWidget(BuildContext context) {
                                           const Text(
                                             'Electrical \nConductivity:',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -606,7 +606,6 @@ Widget buildWidget(BuildContext context) {
                                           const Text(
                                             'Epoch Time:',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -679,7 +678,6 @@ Widget buildWidget(BuildContext context) {
                                           const Text(
                                             'Humidity:',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -748,7 +746,6 @@ Widget buildWidget(BuildContext context) {
                                           const Text(
                                             'Lite Intensity:',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                             ),
                                           ),

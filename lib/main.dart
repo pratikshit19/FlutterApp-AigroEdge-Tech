@@ -3,7 +3,9 @@
 import 'package:design/main_page.dart';
 import 'package:design/pages/home/home.dart';
 import 'package:design/pages/login.dart';
-import 'package:design/pages/mycrops.dart';
+import 'package:design/pages/mydevices.dart';
+import 'package:design/pages/myfarm.dart';
+import 'package:design/pages/screens/adddev.dart';
 import 'package:design/pages/screens/addfarm.dart';
 import 'package:design/pages/screens/dashboard.dart';
 import 'package:design/pages/screens/profileScreen.dart';
@@ -12,6 +14,7 @@ import 'package:design/pages/welcome_page.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,9 +42,11 @@ class MyApp extends StatelessWidget {
             MyRoutes.signupRoute: (context) => const SignupPage(),
             MyRoutes.welcomeRoute: (context) => const WelcomePage(),
             MyRoutes.dashboardRoute: (context) => Dashboard(),
-            MyRoutes.mycropsRoute: (context) => const MyCrops(),
+            MyRoutes.mydevicesRoute: (context) => const MyDevices(),
             MyRoutes.profileRoute: (context) => const ProfileScreen(),
             MyRoutes.addfarmRoute: (context) => const AddFarmScreen(),
+            MyRoutes.adddevRoute: (context) => const AddDevice(),
+            MyRoutes.myfarmRoute: (context) => const MyFarm(),
           },
           builder: (context, child) {
             return MediaQuery(
@@ -52,6 +57,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.green,
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            fontFamily: GoogleFonts.judson().fontFamily,
           ),
         );
       },

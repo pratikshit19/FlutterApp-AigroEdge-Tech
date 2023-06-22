@@ -59,8 +59,8 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
               Container(
                 child: Table(
                   border: TableBorder.all(
-                    color: Colors
-                        .grey, // Set the desired border color for the table cells
+                    color: Colors.grey
+                        .shade400, // Set the desired border color for the table cells
                     width:
                         1.0, // Set the desired border width for the table cells
                   ),
@@ -201,8 +201,8 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
               ),
               Table(
                 border: TableBorder.all(
-                  color: Colors
-                      .grey, // Set the desired border color for the table cells
+                  color: Colors.grey
+                      .shade400, // Set the desired border color for the table cells
                   width:
                       1.0, // Set the desired border width for the table cells
                 ),
@@ -285,21 +285,27 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 children: [
                   TextField(
                     decoration: InputDecoration(
-                      constraints: BoxConstraints(maxHeight: 50, maxWidth: 170),
-                      border: OutlineInputBorder(),
+                      constraints:
+                          const BoxConstraints(maxHeight: 50, maxWidth: 170),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey.shade400),
+                      ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      constraints: BoxConstraints(maxHeight: 50, maxWidth: 170),
-                      border: OutlineInputBorder(),
+                      constraints:
+                          const BoxConstraints(maxHeight: 50, maxWidth: 170),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey.shade400),
+                      ),
                     ),
                   ),
                 ],
