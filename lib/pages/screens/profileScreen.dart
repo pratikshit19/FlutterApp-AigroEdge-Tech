@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,61 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late String fullName = '';
+  late String email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    signIn();
+    fetchUserData();
+  }
+
+  Future<void> signIn() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'user@example.com', // Replace with the user's email
+        password: 'password', // Replace with the user's password
+      );
+      print('User signed in successfully');
+      // Call fetchUserData() here to fetch the data after the user is signed in
+    } catch (e) {
+      print('Error signing in: $e');
+    }
+  }
+
+  Future<void> fetchUserData() async {
+    try {
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        print('User is signed in'); // Add this line
+
+        final QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+            .collection('User')
+            .where('Full Name', isEqualTo: user.displayName)
+            .where('Email', isEqualTo: user.email)
+            .get();
+
+        if (userSnapshot.docs.isNotEmpty) {
+          final DocumentSnapshot document = userSnapshot.docs.first;
+          final data = document.data() as Map<String, dynamic>;
+
+          setState(() {
+            fullName = data['Full Name'];
+            email = data['Email'];
+          });
+        } else {
+          print('User document not found');
+        }
+      } else {
+        print('User is not signed in'); // Add this line
+      }
+    } catch (e) {
+      print('Error retrieving user data: $e');
+    }
+  }
+
   // Method to handle the logout action
   void _logout() {
     // Perform the logout operation here
@@ -95,15 +151,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "Full Name",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  Text(
+                    fullName,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.black),
                   ),
                   const SizedBox(height: 5),
-                  const Text(
-                    "@Username",
-                    style:
-                        TextStyle(fontWeight: FontWeight.normal, fontSize: 10),
+                  Text(
+                    email,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 10,
+                        color: Colors.grey.shade500),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(

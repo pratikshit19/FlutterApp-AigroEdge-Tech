@@ -53,22 +53,6 @@ class EditProfile extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.3),
                           ),
                         ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: CircleAvatar(
-                            radius: 14,
-                            backgroundColor: Colors.black54,
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.edit,
-                                color: Colors.white,
-                                size: 14,
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),

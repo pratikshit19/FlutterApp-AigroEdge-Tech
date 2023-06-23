@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,61 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  late String fullName = '';
+  late String email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    signIn();
+    fetchUserData();
+  }
+
+  Future<void> signIn() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'user@example.com', // Replace with the user's email
+        password: 'password', // Replace with the user's password
+      );
+      print('User signed in successfully');
+      // Call fetchUserData() here to fetch the data after the user is signed in
+    } catch (e) {
+      print('Error signing in: $e');
+    }
+  }
+
+  Future<void> fetchUserData() async {
+    try {
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        print('User is signed in'); // Add this line
+
+        final QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+            .collection('User')
+            .where('Full Name', isEqualTo: user.displayName)
+            .where('Email', isEqualTo: user.email)
+            .get();
+
+        if (userSnapshot.docs.isNotEmpty) {
+          final DocumentSnapshot document = userSnapshot.docs.first;
+          final data = document.data() as Map<String, dynamic>;
+
+          setState(() {
+            fullName = data['Full Name'];
+            email = data['Email'];
+          });
+        } else {
+          print('User document not found');
+        }
+      } else {
+        print('User is not signed in'); // Add this line
+      }
+    } catch (e) {
+      print('Error retrieving user data: $e');
+    }
+  }
+
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
@@ -36,7 +92,6 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColors.textfields.withOpacity(0.3),
       drawer: Drawer(
         width: 250,
         child: ListView(
@@ -71,19 +126,19 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                       const SizedBox(height: 50),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 15, top: 50),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, top: 50),
                         child: Column(
                           children: [
                             Text(
-                              "Full Name",
-                              style: TextStyle(
+                              fullName,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
-                              "@Username",
-                              style: TextStyle(
+                              email,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.normal, fontSize: 10),
                             ),
                           ],
@@ -151,7 +206,7 @@ class _DashboardState extends State<Dashboard> {
         title: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 75),
           child: Text(
-            'AigroCare',
+            'AigroEdge',
             style: TextStyle(
                 fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
           ),
