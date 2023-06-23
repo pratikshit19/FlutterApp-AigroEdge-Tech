@@ -1,7 +1,6 @@
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MyDevices extends StatelessWidget {
   const MyDevices({Key? key}) : super(key: key);
@@ -22,12 +21,12 @@ class MyDevices extends StatelessWidget {
             },
             icon: const Icon(Icons.arrow_back),
           ),
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 85),
+          title: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 85),
             child: Text(
               'My Devices',
-              style: GoogleFonts.judson(
-                  color: Colors.black, fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -53,26 +52,23 @@ class MyDevices extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20, left: 20),
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Device 1',
-                                    style: GoogleFonts.judson(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 200,
                                 ),
-                                const Icon(Icons.menu_rounded)
+                                Icon(Icons.menu_rounded)
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
@@ -83,7 +79,7 @@ class MyDevices extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 187),
                               child: Text(
                                 'Device Installation date:',
                                 style: TextStyle(
@@ -111,15 +107,13 @@ class MyDevices extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20, left: 20),
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Device 1',
-                                    style: GoogleFonts.judson(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -129,7 +123,7 @@ class MyDevices extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
@@ -140,7 +134,7 @@ class MyDevices extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 187),
                               child: Text(
                                 'Device Installation date:',
                                 style: TextStyle(
@@ -168,15 +162,13 @@ class MyDevices extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20, left: 20),
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Device 1',
-                                    style: GoogleFonts.judson(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -186,7 +178,7 @@ class MyDevices extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
@@ -197,7 +189,7 @@ class MyDevices extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 187),
                               child: Text(
                                 'Device Installation date:',
                                 style: TextStyle(
@@ -225,15 +217,13 @@ class MyDevices extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20, left: 20),
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Device 1',
-                                    style: GoogleFonts.judson(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -243,7 +233,7 @@ class MyDevices extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
@@ -254,7 +244,7 @@ class MyDevices extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 187),
                               child: Text(
                                 'Device Installation date:',
                                 style: TextStyle(
@@ -282,15 +272,13 @@ class MyDevices extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20, left: 20),
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Device 1',
-                                    style: GoogleFonts.judson(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -300,7 +288,7 @@ class MyDevices extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
@@ -311,7 +299,7 @@ class MyDevices extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 187),
                               child: Text(
                                 'Device Installation date:',
                                 style: TextStyle(

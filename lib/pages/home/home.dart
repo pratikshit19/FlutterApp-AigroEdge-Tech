@@ -3,7 +3,6 @@ import 'package:design/pages/screens/analyticsScreen.dart';
 import 'package:design/pages/screens/cameraScreen.dart';
 import 'package:design/pages/screens/dashboard.dart';
 import 'package:design/pages/screens/profileScreen.dart';
-import 'package:design/pages/screens/searchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -19,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   final User? user = FirebaseAuth.instance.currentUser;
   int myIndex = 0;
   List<Widget> widgetList = [
-    Dashboard(),
+    const Dashboard(),
     const AnalyticsScreen(),
     const CameraScreen(),
     const ProfileScreen(),

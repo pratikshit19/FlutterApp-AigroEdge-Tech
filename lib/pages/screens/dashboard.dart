@@ -4,17 +4,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+// ignore: unused_import
+import 'package:location/location.dart';
 
 class Dashboard extends StatefulWidget {
-  Dashboard({Key? key}) : super(key: key);
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
+  final DatabaseReference databaseReference = FirebaseDatabase.instance
+      .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com')
+      .child('WiFi_Devices')
+      .child('AE01')
+      .child('Last Update');
   final User? user = FirebaseAuth.instance.currentUser;
 
   String? selectedValue;
@@ -23,6 +29,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: AppColors.textfields.withOpacity(0.3),
       drawer: Drawer(
         width: 250,
         child: ListView(
@@ -41,36 +48,36 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'My Farm',
-                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onTap: () {
                 Navigator.pushNamed(context, MyRoutes.myfarmRoute);
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'My Devices',
-                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onTap: () {
                 Navigator.pushNamed(context, MyRoutes.mydevicesRoute);
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'History',
-                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onTap: () {
                 // Add your logic for handling item 1 tap
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Settings',
-                style: GoogleFonts.judson(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onTap: () {
                 // Add your logic for handling item 1 tap
@@ -94,11 +101,11 @@ class _DashboardState extends State<Dashboard> {
             );
           },
         ),
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 85),
+        title: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 75),
           child: Text(
             'AigroCare',
-            style: GoogleFonts.judson(
+            style: TextStyle(
                 fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
@@ -186,19 +193,63 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             const SizedBox(
-              height: 35,
+              height: 15,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 0, right: 185),
-              child: Text(
-                "Device Updates",
-                style: GoogleFonts.judson(
-                    fontSize: 22, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-            ),
+                padding: const EdgeInsets.only(left: 0, right: 20),
+                child: StreamBuilder(
+                  stream: databaseReference.onValue,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data!.snapshot.value;
+                      final epochTime = data != null &&
+                              (data as Map<dynamic, dynamic>)['DT'] != null
+                          ? int.parse((data)['DT'].toString())
+                          : null;
+
+                      String formattedDateTime = '';
+                      if (epochTime != null) {
+                        final dateTime =
+                            DateTime.fromMillisecondsSinceEpoch(epochTime);
+                        formattedDateTime = dateTime.toString();
+                      }
+
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 100),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 45),
+                              child: Text(
+                                "Device Updates",
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: Text(
+                                'Last updated on: $formattedDateTime',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
+                )),
             const SizedBox(
-              height: 10,
+              height: 0,
             ),
             Expanded(
               child: buildWidget(context),
@@ -221,12 +272,13 @@ Widget buildWidget(BuildContext context) {
     stream: databaseReference.onValue,
     builder: (context, snapshot) {
       if (snapshot.hasData) {
+        // ignore: unused_local_variable
         final data = snapshot.data!.snapshot.value;
 
         return SizedBox(
-          height: 355,
+          height: 360,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
@@ -236,6 +288,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -244,17 +310,9 @@ Widget buildWidget(BuildContext context) {
                           padding: const EdgeInsets.only(top: 15, right: 80),
                           child: Column(
                             children: [
-                              const Text(
-                                "Battery:",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 82),
+                                padding:
+                                    const EdgeInsets.only(top: 15, left: 82),
                                 child: StreamBuilder(
                                   stream: databaseReference.onValue,
                                   builder: (context, snapshot) {
@@ -311,6 +369,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -340,13 +412,24 @@ Widget buildWidget(BuildContext context) {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 35, left: 35),
-                                      child: Text(
-                                        soilPH,
-                                        style: const TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                          top: 15, left: 5),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/ph-meter.png',
+                                            height: 60,
+                                            width: 35,
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          Text(
+                                            soilPH,
+                                            style: const TextStyle(
+                                              fontSize: 35,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -372,6 +455,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -408,13 +505,24 @@ Widget buildWidget(BuildContext context) {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 35, left: 35),
-                                            child: Text(
-                                              soilTemperature,
-                                              style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                                top: 15, left: 5),
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/soiltemp.png',
+                                                  height: 60,
+                                                  width: 40,
+                                                ),
+                                                const SizedBox(
+                                                  width: 15,
+                                                ),
+                                                Text(
+                                                  soilTemperature,
+                                                  style: const TextStyle(
+                                                    fontSize: 35,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -439,6 +547,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -475,13 +597,24 @@ Widget buildWidget(BuildContext context) {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 35, left: 35),
-                                            child: Text(
-                                              soilMoisture,
-                                              style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                                top: 15, left: 5),
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/moisture.png',
+                                                  height: 60,
+                                                  width: 45,
+                                                ),
+                                                const SizedBox(
+                                                  width: 15,
+                                                ),
+                                                Text(
+                                                  soilMoisture,
+                                                  style: const TextStyle(
+                                                    fontSize: 35,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -510,6 +643,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -550,8 +697,7 @@ Widget buildWidget(BuildContext context) {
                                             child: Text(
                                               electricalConductivity,
                                               style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
+                                                fontSize: 35,
                                               ),
                                             ),
                                           ),
@@ -577,6 +723,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -591,7 +751,7 @@ Widget buildWidget(BuildContext context) {
                                 final epochTime = data != null &&
                                         (data as Map<dynamic, dynamic>)['DT'] !=
                                             null
-                                    ? (data)['DT'].toString()
+                                    ? (data)['T'].toString()
                                     : '';
 
                                 return Row(
@@ -604,7 +764,7 @@ Widget buildWidget(BuildContext context) {
                                             CrossAxisAlignment.start,
                                         children: [
                                           const Text(
-                                            'Epoch Time:',
+                                            'Ambient\nTemperature:',
                                             style: TextStyle(
                                               fontSize: 15,
                                             ),
@@ -618,8 +778,7 @@ Widget buildWidget(BuildContext context) {
                                             child: Text(
                                               epochTime,
                                               style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
+                                                fontSize: 35,
                                               ),
                                             ),
                                           ),
@@ -649,6 +808,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -690,8 +863,7 @@ Widget buildWidget(BuildContext context) {
                                             child: Text(
                                               humidity,
                                               style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
+                                                fontSize: 35,
                                               ),
                                             ),
                                           ),
@@ -717,6 +889,20 @@ Widget buildWidget(BuildContext context) {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.textfields.withOpacity(0.3),
+                        boxShadow: [
+                          //bottom left shadow - darker
+                          BoxShadow(
+                              color: Colors.grey.shade400,
+                              offset: const Offset(2, 2),
+                              blurRadius: 4,
+                              spreadRadius: 1),
+                          //top left shadow - lighter
+                          const BoxShadow(
+                              color: Colors.white,
+                              offset: Offset(-2, -2),
+                              blurRadius: 3,
+                              spreadRadius: 1),
+                        ],
                       ),
                       child: SizedBox(
                         height: 165,
@@ -758,8 +944,7 @@ Widget buildWidget(BuildContext context) {
                                             child: Text(
                                               lightIntensity,
                                               style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
+                                                fontSize: 35,
                                               ),
                                             ),
                                           ),

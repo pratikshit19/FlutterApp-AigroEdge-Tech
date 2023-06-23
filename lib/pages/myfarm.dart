@@ -25,7 +25,8 @@ class MyFarm extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 85),
             child: Text(
               'My Farms',
-              style: TextStyle(color: Colors.black),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -57,9 +58,7 @@ class MyFarm extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Farm 1',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -69,20 +68,20 @@ class MyFarm extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
                               child: Text(
-                                'Device location:',
+                                'Farm location:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 228),
                               child: Text(
-                                'Device Installation date:',
+                                'Total land area:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
@@ -114,9 +113,7 @@ class MyFarm extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Farm 1',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -126,20 +123,20 @@ class MyFarm extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
                               child: Text(
-                                'Device location:',
+                                'Farm location:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 228),
                               child: Text(
-                                'Device Installation date:',
+                                'Total land area:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
@@ -171,9 +168,7 @@ class MyFarm extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Farm 1',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -183,20 +178,20 @@ class MyFarm extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
                               child: Text(
-                                'Device location:',
+                                'Farm location:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 228),
                               child: Text(
-                                'Device Installation date:',
+                                'Total land area:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
@@ -228,9 +223,7 @@ class MyFarm extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Farm 1',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -240,20 +233,20 @@ class MyFarm extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
                               child: Text(
-                                'Device location:',
+                                'Farm location:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 228),
                               child: Text(
-                                'Device Installation date:',
+                                'Total land area:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
@@ -285,9 +278,7 @@ class MyFarm extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Farm 1',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 SizedBox(
@@ -297,20 +288,20 @@ class MyFarm extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 40,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 235),
                               child: Text(
-                                'Device location:',
+                                'Farm location:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 192),
+                              padding: const EdgeInsets.only(right: 228),
                               child: Text(
-                                'Device Installation date:',
+                                'Total land area:',
                                 style: TextStyle(
                                     color: Colors.grey.shade500, fontSize: 12),
                               ),

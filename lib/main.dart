@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.loginRoute: (context) => const LoginPage(),
             MyRoutes.signupRoute: (context) => const SignupPage(),
             MyRoutes.welcomeRoute: (context) => const WelcomePage(),
-            MyRoutes.dashboardRoute: (context) => Dashboard(),
+            MyRoutes.dashboardRoute: (context) => const Dashboard(),
             MyRoutes.mydevicesRoute: (context) => const MyDevices(),
             MyRoutes.profileRoute: (context) => const ProfileScreen(),
             MyRoutes.addfarmRoute: (context) => const AddFarmScreen(),
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.green,
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            fontFamily: GoogleFonts.judson().fontFamily,
+            fontFamily: GoogleFonts.poppins().fontFamily,
           ),
         );
       },

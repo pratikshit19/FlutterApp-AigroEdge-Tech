@@ -2,7 +2,6 @@
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AddDevice extends StatelessWidget {
   const AddDevice({super.key});
@@ -21,11 +20,11 @@ class AddDevice extends StatelessWidget {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 85),
+        title: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 85),
           child: Text(
             'Add Device',
-            style: GoogleFonts.judson(
+            style: TextStyle(
                 fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
@@ -37,12 +36,12 @@ class AddDevice extends StatelessWidget {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 140),
+              const Padding(
+                padding: EdgeInsets.only(right: 158),
                 child: Text(
-                  '> Add your IoT Device',
-                  style: GoogleFonts.judson(
-                      fontSize: 22,
+                  '1. Add your IoT Device',
+                  style: TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
@@ -79,7 +78,7 @@ class AddDevice extends StatelessWidget {
                             color: Colors.white),
                       ),
                       SizedBox(
-                        width: 170,
+                        width: 155,
                       ),
                       Icon(
                         Icons.arrow_forward_ios_rounded,
@@ -89,13 +88,13 @@ class AddDevice extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 60),
-              Padding(
-                padding: const EdgeInsets.only(right: 245),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.only(right: 245),
                 child: Text(
-                  '> Device ID',
-                  style: GoogleFonts.judson(
-                      fontSize: 22,
+                  '2. Device ID',
+                  style: TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
@@ -104,17 +103,19 @@ class AddDevice extends StatelessWidget {
               const TextField(
                 decoration: InputDecoration(
                   hintText: "Add you device ID",
-                  //constraints: BoxConstraints(maxHeight: 50, maxWidth: 170),
+                  constraints: BoxConstraints(
+                    maxHeight: 50,
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(right: 100),
+              const Padding(
+                padding: EdgeInsets.only(right: 118),
                 child: Text(
-                  '> Device Installation Date',
-                  style: GoogleFonts.judson(
-                      fontSize: 22,
+                  '3. Device Installation Date',
+                  style: TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
@@ -123,11 +124,11 @@ class AddDevice extends StatelessWidget {
               const TextField(
                 decoration: InputDecoration(
                   hintText: "Add you device installation date",
-                  //constraints: BoxConstraints(maxHeight: 50, maxWidth: 170),
+                  constraints: BoxConstraints(maxHeight: 50),
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 60),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding:

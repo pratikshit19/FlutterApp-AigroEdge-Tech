@@ -3,7 +3,6 @@ import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -41,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: EdgeInsets.symmetric(horizontal: 100),
           child: Text(
             'Profile',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
         actions: [
@@ -80,12 +79,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           bottom: 0,
                           right: 0,
                           child: CircleAvatar(
+                            radius: 14,
                             backgroundColor: Colors.black54,
                             child: IconButton(
                               onPressed: () {},
                               icon: const Icon(
                                 Icons.edit,
                                 color: Colors.white,
+                                size: 14,
                               ),
                             ),
                           ),
@@ -94,10 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
+                  const Text(
                     "Full Name",
-                    style: GoogleFonts.judson(
-                        fontWeight: FontWeight.bold, fontSize: 15),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                   const SizedBox(height: 5),
                   const Text(
@@ -122,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 5),
                   const Text(
-                    "_____________________________________",
+                    "_________________________________",
                     style: TextStyle(
                         fontWeight: FontWeight.normal, color: Colors.grey),
                   ),
@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //bottom left shadow - darker
                         BoxShadow(
                             color: Colors.grey.shade400,
-                            offset: Offset(2, 2),
+                            offset: const Offset(2, 2),
                             blurRadius: 4,
                             spreadRadius: 1),
                         //top left shadow - lighter
@@ -157,9 +157,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: Colors.black,
                           ),
                           const SizedBox(width: 15),
-                          Text(
+                          const Text(
                             "Knowledge Base",
-                            style: GoogleFonts.judson(
+                            style: TextStyle(
                                 fontWeight: FontWeight.normal, fontSize: 15),
                           ),
                           const Spacer(),
@@ -181,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //bottom left shadow - darker
                         BoxShadow(
                             color: Colors.grey.shade400,
-                            offset: Offset(2, 2),
+                            offset: const Offset(2, 2),
                             blurRadius: 4,
                             spreadRadius: 1),
                         //top left shadow - lighter
@@ -203,9 +203,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: Colors.black,
                           ),
                           const SizedBox(width: 15),
-                          Text(
+                          const Text(
                             "Privacy Policy",
-                            style: GoogleFonts.judson(
+                            style: TextStyle(
                                 fontWeight: FontWeight.normal, fontSize: 15),
                           ),
                           const Spacer(),
@@ -227,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //bottom left shadow - darker
                         BoxShadow(
                             color: Colors.grey.shade400,
-                            offset: Offset(2, 2),
+                            offset: const Offset(2, 2),
                             blurRadius: 4,
                             spreadRadius: 1),
                         //top left shadow - lighter
@@ -251,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(width: 15),
                           const Text(
                             "My Devices",
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                           const Spacer(),
                           IconButton(
@@ -275,7 +275,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //bottom left shadow - darker
                         BoxShadow(
                             color: Colors.grey.shade400,
-                            offset: Offset(2, 2),
+                            offset: const Offset(2, 2),
                             blurRadius: 4,
                             spreadRadius: 1),
                         //top left shadow - lighter
@@ -299,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(width: 15),
                           const Text(
                             "Help Centre",
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                           const Spacer(),
                           IconButton(
@@ -320,7 +320,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //bottom left shadow - darker
                         BoxShadow(
                             color: Colors.grey.shade400,
-                            offset: Offset(2, 2),
+                            offset: const Offset(2, 2),
                             blurRadius: 4,
                             spreadRadius: 1),
                         //top left shadow - lighter
@@ -344,7 +344,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(width: 15),
                           const Text(
                             "Rate Us",
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                           const Spacer(),
                           IconButton(
@@ -365,7 +365,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //bottom left shadow - darker
                         BoxShadow(
                             color: Colors.grey.shade400,
-                            offset: Offset(2, 2),
+                            offset: const Offset(2, 2),
                             blurRadius: 4,
                             spreadRadius: 1),
                         //top left shadow - lighter
@@ -389,7 +389,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(width: 15),
                           const Text(
                             "Log Out",
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                           const Spacer(),
                           IconButton(

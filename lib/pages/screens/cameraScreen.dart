@@ -68,6 +68,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 cameraController.takePicture().then((XFile? file) {
                   if (mounted) {
                     if (file != null) {
+                      // ignore: avoid_print
                       print("picture saved to ${file.path}");
                     }
                   }

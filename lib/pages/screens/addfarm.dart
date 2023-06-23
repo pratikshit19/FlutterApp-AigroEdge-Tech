@@ -33,7 +33,7 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
           padding: EdgeInsets.symmetric(horizontal: 85),
           child: Text(
             'Add Farm',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -43,12 +43,12 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(right: 195),
+                padding: EdgeInsets.only(right: 225),
                 child: Text(
-                  '> Add Location',
+                  '1. Add Location',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -187,12 +187,12 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
                 height: 20,
               ),
               const Padding(
-                padding: EdgeInsets.only(right: 175),
+                padding: EdgeInsets.only(right: 200),
                 child: Text(
-                  '> Total Land Area',
+                  '2. Total Land Area',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -252,7 +252,7 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
                           padding: EdgeInsets.only(left: 10),
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: 'Enter your State',
+                              hintText: 'Enter your Land Area',
                             ),
                           ),
                         ),
@@ -276,7 +276,7 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
                       width: 100,
                     ),
                     Text(
-                      'Crop Name',
+                      'Crop Variety',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -314,12 +314,12 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
                 height: 20,
               ),
               const Padding(
-                padding: EdgeInsets.only(right: 175),
+                padding: EdgeInsets.only(right: 180),
                 child: Text(
-                  '> Crop Sowing Date',
+                  '3. Crop Sowing Date',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
               ),
