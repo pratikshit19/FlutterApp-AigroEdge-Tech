@@ -9,4 +9,5 @@ class MyRoutes {
   static String addfarmRoute = "/addfarm";
   static String adddevRoute = "/adddevice";
   static String myfarmRoute = "/myfarm";
+  static String editprofRoute = "/editprof";
 }

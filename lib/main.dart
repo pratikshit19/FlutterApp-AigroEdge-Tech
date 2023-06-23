@@ -8,6 +8,7 @@ import 'package:design/pages/myfarm.dart';
 import 'package:design/pages/screens/adddev.dart';
 import 'package:design/pages/screens/addfarm.dart';
 import 'package:design/pages/screens/dashboard.dart';
+import 'package:design/pages/screens/editprof.dart';
 import 'package:design/pages/screens/profileScreen.dart';
 import 'package:design/pages/signup_page.dart';
 import 'package:design/pages/welcome_page.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.addfarmRoute: (context) => const AddFarmScreen(),
             MyRoutes.adddevRoute: (context) => const AddDevice(),
             MyRoutes.myfarmRoute: (context) => const MyFarm(),
+            MyRoutes.editprofRoute: (context) => const EditProfile(),
           },
           builder: (context, child) {
             return MediaQuery(

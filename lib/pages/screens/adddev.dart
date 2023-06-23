@@ -37,9 +37,9 @@ class AddDevice extends StatelessWidget {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(right: 158),
+                padding: EdgeInsets.only(right: 165),
                 child: Text(
-                  '1. Add your IoT Device',
+                  'Add your IoT Device',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -90,9 +90,9 @@ class AddDevice extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Padding(
-                padding: EdgeInsets.only(right: 245),
+                padding: EdgeInsets.only(right: 265),
                 child: Text(
-                  '2. Device ID',
+                  'Device ID',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -111,9 +111,9 @@ class AddDevice extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Padding(
-                padding: EdgeInsets.only(right: 118),
+                padding: EdgeInsets.only(right: 138),
                 child: Text(
-                  '3. Device Installation Date',
+                  'Device Installation Date',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:design/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// ignore: unused_import
-import 'package:location/location.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -16,6 +16,13 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(28.54744274365559, 77.3326009898075),
+    zoom: 15,
+  );
   final DatabaseReference databaseReference = FirebaseDatabase.instance
       .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com')
       .child('WiFi_Devices')
@@ -39,12 +46,52 @@ class _DashboardState extends State<Dashboard> {
               decoration: BoxDecoration(
                 color: AppColors.textfields.withOpacity(0.3),
               ),
-              child: const Text(
-                'Hey \n\nUsername!',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  final double screenWidth = constraints.maxWidth;
+                  final bool isSmallScreen = screenWidth < 600;
+                  return Row(
+                    children: [
+                      SizedBox(
+                        height: isSmallScreen ? 80 : 100,
+                        width: isSmallScreen ? 80 : 100,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.white, width: 2),
+                                shape: BoxShape.circle,
+                                color: Colors.grey.withOpacity(0.3),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 50),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 15, top: 50),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Full Name",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "@Username",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 10),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             ListTile(
@@ -128,10 +175,13 @@ class _DashboardState extends State<Dashboard> {
               ),
               width: double.infinity,
               height: 140,
-              child: const Padding(
-                padding: EdgeInsets.only(top: 20, left: 35),
-                child: Column(
-                  children: [Row()],
+              child: Expanded(
+                child: GoogleMap(
+                  mapType: MapType.terrain,
+                  initialCameraPosition: _kGooglePlex,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
                 ),
               ),
             ),
@@ -307,12 +357,12 @@ Widget buildWidget(BuildContext context) {
                         height: 165,
                         width: 165,
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 15, right: 80),
+                          padding: const EdgeInsets.only(top: 15, right: 50),
                           child: Column(
                             children: [
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 15, left: 82),
+                                    const EdgeInsets.only(top: 15, left: 55),
                                 child: StreamBuilder(
                                   stream: databaseReference.onValue,
                                   builder: (context, snapshot) {
@@ -342,10 +392,11 @@ Widget buildWidget(BuildContext context) {
                                           child: Text(
                                             '$batteryData%',
                                             style: const TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.bold,
                                               color: AppColors.darkgreen,
                                             ),
+                                            maxLines: 1,
                                           ),
                                         ),
                                       );

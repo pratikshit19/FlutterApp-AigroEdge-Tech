@@ -114,17 +114,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(15)),
                       backgroundColor: AppColors.darkgreen,
                     ),
-                    onPressed: () async {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, MyRoutes.editprofRoute);
+                    },
                     child: Text(
                       'Edit Profile',
                       style: TextStyle(fontSize: isSmallScreen ? 12 : 14),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    "_________________________________",
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal, color: Colors.grey),
                   ),
                   const SizedBox(height: 20),
                   Container(
