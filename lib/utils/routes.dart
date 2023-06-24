@@ -10,4 +10,7 @@ class MyRoutes {
   static String adddevRoute = "/adddevice";
   static String myfarmRoute = "/myfarm";
   static String editprofRoute = "/editprof";
+  static String historyRoute = "/historyprof";
+  static String splashRoute = "/splashprof";
+  static String onboardingRoute = "/onboarding";
 }

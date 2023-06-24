@@ -92,7 +92,10 @@ class _SignupPageState extends State<SignupPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/stock_img4.png'),
+              Image.asset(
+                'assets/images/stock_img4.png',
+                height: 130,
+              ),
               const SizedBox(
                 height: 25,
               ),
@@ -102,6 +105,17 @@ class _SignupPageState extends State<SignupPage> {
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Create an account to continue",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(
@@ -115,6 +129,7 @@ class _SignupPageState extends State<SignupPage> {
                     borderSide: const BorderSide(color: AppColors.darkgreen),
                     borderRadius: BorderRadius.circular(15),
                   ),
+                  prefixIcon: Icon(Icons.person_2_outlined),
                   filled: true,
                   fillColor: AppColors.textfields.withOpacity(0.2),
                   hintText: 'Enter Full Name',
@@ -143,6 +158,7 @@ class _SignupPageState extends State<SignupPage> {
                     borderSide: const BorderSide(color: AppColors.darkgreen),
                     borderRadius: BorderRadius.circular(15),
                   ),
+                  prefixIcon: Icon(Icons.email_outlined),
                   filled: true,
                   fillColor: AppColors.textfields.withOpacity(0.2),
                   hintText: 'Enter Email',
@@ -172,6 +188,8 @@ class _SignupPageState extends State<SignupPage> {
                     borderSide: const BorderSide(color: AppColors.darkgreen),
                     borderRadius: BorderRadius.circular(15),
                   ),
+                  prefixIcon: Icon(Icons.lock_outline),
+                  suffixIcon: Icon(Icons.remove_red_eye),
                   filled: true,
                   fillColor: AppColors.textfields.withOpacity(0.2),
                   hintText: 'Enter Password',
@@ -204,6 +222,8 @@ class _SignupPageState extends State<SignupPage> {
                     borderSide: const BorderSide(color: AppColors.darkgreen),
                     borderRadius: BorderRadius.circular(15),
                   ),
+                  prefixIcon: Icon(Icons.lock_outline_rounded),
+                  suffixIcon: Icon(Icons.remove_red_eye),
                   filled: true,
                   fillColor: AppColors.textfields.withOpacity(0.2),
                   hintText: 'Confirm Password',

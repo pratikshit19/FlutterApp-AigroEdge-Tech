@@ -98,8 +98,13 @@ class _DashboardState extends State<Dashboard> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                color: AppColors.textfields.withOpacity(0.3),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [AppColors.darkgreen, AppColors.textfields],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                //color: AppColors.textfields.withOpacity(0.3),
               ),
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
@@ -133,13 +138,17 @@ class _DashboardState extends State<Dashboard> {
                             Text(
                               fullName,
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.white),
                             ),
                             const SizedBox(height: 5),
                             Text(
                               email,
                               style: const TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 10),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 10,
+                                  color: Colors.white),
                             ),
                           ],
                         ),
@@ -173,7 +182,7 @@ class _DashboardState extends State<Dashboard> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onTap: () {
-                // Add your logic for handling item 1 tap
+                Navigator.pushNamed(context, MyRoutes.historyRoute);
               },
             ),
             ListTile(
@@ -184,6 +193,53 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 // Add your logic for handling item 1 tap
               },
+            ),
+            const SizedBox(
+              height: 230,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                children: [
+                  SizedBox(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/aigro_logo.png',
+                          height: 35,
+                          width: 35,
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 100),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 5,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'AigroEdge Technologies',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9,
+                              color: Colors.black),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'aigroedgetech@gmail.com',
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 7,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

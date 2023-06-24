@@ -66,9 +66,12 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/stock_img3.png'),
+              Image.asset(
+                'assets/images/stock_img3.png',
+                height: 170,
+              ),
               const SizedBox(
-                height: 25,
+                height: 30,
               ),
               Text(
                 "Welcome $name",
@@ -79,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 15,
               ),
               const Text(
                 "Login into your account to continue",
@@ -90,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(
-                height: 40,
+                height: 60,
               ),
               Container(
                 height: 55,
@@ -112,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                               const BorderSide(color: AppColors.darkgreen),
                           borderRadius: BorderRadius.circular(15),
                         ),
+                        prefixIcon: Icon(Icons.email_outlined),
                         filled: true,
                         fillColor: AppColors.textfields.withOpacity(0.2),
                         hintText: 'Email',
@@ -152,6 +156,8 @@ class _LoginPageState extends State<LoginPage> {
                               const BorderSide(color: AppColors.darkgreen),
                           borderRadius: BorderRadius.circular(15),
                         ),
+                        prefixIcon: Icon(Icons.lock),
+                        suffixIcon: Icon(Icons.remove_red_eye),
                         filled: true,
                         fillColor: AppColors.textfields.withOpacity(0.2),
                         hintText: 'Password',
@@ -251,22 +257,31 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget buildFooter(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        const Text(
-          'Don\'t have an account?',
-          style: TextStyle(color: Colors.black),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Don\'t have an account?',
+              style: TextStyle(color: Colors.black, fontSize: 12),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.popAndPushNamed(context, MyRoutes.signupRoute);
+              },
+              child: const Text(
+                'Sign Up!',
+                style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 12), // Replace with your desired color
+              ),
+            ),
+          ],
         ),
-        TextButton(
-          onPressed: () {
-            Navigator.popAndPushNamed(context, MyRoutes.signupRoute);
-          },
-          child: const Text(
-            'Sign Up!',
-            style: TextStyle(
-                color: Colors.blue), // Replace with your desired color
-          ),
+        const Text(
+          'or',
+          style: TextStyle(color: Colors.black, fontSize: 12),
         ),
       ],
     );

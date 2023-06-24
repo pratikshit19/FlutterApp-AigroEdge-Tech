@@ -5,11 +5,14 @@ import 'package:design/pages/home/home.dart';
 import 'package:design/pages/login.dart';
 import 'package:design/pages/mydevices.dart';
 import 'package:design/pages/myfarm.dart';
+import 'package:design/pages/onboarding.dart';
 import 'package:design/pages/screens/adddev.dart';
 import 'package:design/pages/screens/addfarm.dart';
 import 'package:design/pages/screens/dashboard.dart';
 import 'package:design/pages/screens/editprof.dart';
+import 'package:design/pages/screens/history.dart';
 import 'package:design/pages/screens/profileScreen.dart';
+import 'package:design/pages/screens/splash.dart';
 import 'package:design/pages/signup_page.dart';
 import 'package:design/pages/welcome_page.dart';
 import 'package:design/utils/routes.dart';
@@ -49,6 +52,11 @@ class MyApp extends StatelessWidget {
             MyRoutes.adddevRoute: (context) => const AddDevice(),
             MyRoutes.myfarmRoute: (context) => const MyFarm(),
             MyRoutes.editprofRoute: (context) => const EditProfile(),
+            MyRoutes.historyRoute: (context) => const History(),
+            MyRoutes.onboardingRoute: (context) => const OnboardingPage(),
+            MyRoutes.splashRoute: (context) => SplashScreen(
+                  onSplashScreenComplete: () {},
+                ),
           },
           builder: (context, child) {
             return MediaQuery(

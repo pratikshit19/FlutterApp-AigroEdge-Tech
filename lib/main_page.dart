@@ -1,4 +1,5 @@
 import 'package:design/pages/home/home.dart';
+import 'package:design/pages/screens/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,9 @@ class MainPage extends StatelessWidget {
           if (snapshot.hasData) {
             return const HomePage();
           } else {
-            return const HomePage();
+            return SplashScreen(
+              onSplashScreenComplete: () {},
+            );
           }
         },
       ),
