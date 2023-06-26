@@ -1,10 +1,59 @@
-// ignore: file_names
-import 'package:design/app_colors.dart';
+import 'dart:io';
+
+import 'package:design/utils/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class EditProfile extends StatelessWidget {
-  const EditProfile({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({Key? key}) : super(key: key);
+
+  @override
+  _EditProfileState createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
+  late String _fullName = '';
+  late String _email = '';
+  late String _phoneNumber = '';
+  late String _password = '';
+
+  Future<void> _pickImageFromGallery() async {
+    final XFile? pickedImage =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        _imageFile = File(pickedImage.path);
+      });
+    }
+  }
+
+  void _loadUserDetails() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userData = await FirebaseFirestore.instance
+          .collection('User')
+          .doc(currentUser.uid)
+          .get();
+      setState(() {
+        _fullName = userData['fullName'] ?? '';
+        _email = userData['email'] ?? '';
+        _phoneNumber = userData['phoneNumber'] ?? '';
+        _password = userData['password'] ?? '';
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserDetails();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +65,23 @@ class EditProfile extends StatelessWidget {
         leading: IconButton(
           color: Colors.black,
           onPressed: () {
-            Navigator.pushNamed(
-                context, MyRoutes.profileRoute); // Open the drawer
+            Navigator.pushNamed(context, MyRoutes.profileRoute);
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 85),
-          child: Text(
-            'Edit Profile',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 85),
+          child: TextButton(
+            onPressed: () {},
+            child: const Text(
+              'Edit Profile',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
-        // actions: [],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -46,58 +99,57 @@ class EditProfile extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.white, width: 2),
                             shape: BoxShape.circle,
                             color: Colors.grey.withOpacity(0.3),
+                          ),
+                          child: _imageFile != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(200),
+                                  child: Image.file(
+                                    _imageFile!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: -10,
+                          child: IconButton(
+                            onPressed: _pickImageFromGallery,
+                            icon: const Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
-                  const Text(
-                    'Edit Profile Photo',
-                    style: TextStyle(
-                        fontSize: 12, decoration: TextDecoration.underline),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 270),
-                    child: Text(
-                      'Username',
+                  TextButton(
+                    onPressed: _pickImageFromGallery,
+                    child: const Text(
+                      'Edit Profile Photo',
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        decoration: TextDecoration.underline,
+                        color: Colors.grey,
                       ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: AppColors.darkgreen),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      filled: true,
-                      fillColor: AppColors.textfields.withOpacity(0.2),
-                      hintText: 'Username',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 14),
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 30,
                   ),
                   const Padding(
                     padding: EdgeInsets.only(right: 270),
@@ -110,29 +162,30 @@ class EditProfile extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  // Email TextFormField
                   TextFormField(
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: AppColors.darkgreen),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       filled: true,
                       fillColor: AppColors.textfields.withOpacity(0.2),
                       hintText: 'Full Name',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 14),
+                        horizontal: 20,
+                        vertical: 14,
+                      ),
                     ),
+                    initialValue: _fullName,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  // Password TextFormField
                   const Padding(
                     padding: EdgeInsets.only(right: 300),
                     child: Text(
@@ -149,23 +202,25 @@ class EditProfile extends StatelessWidget {
                       focusedBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: AppColors.darkgreen),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       filled: true,
                       fillColor: AppColors.textfields.withOpacity(0.2),
                       hintText: 'Email',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 14),
+                        horizontal: 20,
+                        vertical: 14,
+                      ),
                     ),
+                    initialValue: _email,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  // Confirm Password TextFormField
                   const Padding(
                     padding: EdgeInsets.only(right: 270),
                     child: Text(
@@ -178,32 +233,32 @@ class EditProfile extends StatelessWidget {
                     ),
                   ),
                   TextFormField(
+                    initialValue: _password,
                     obscureText: true,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: AppColors.darkgreen),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       filled: true,
                       fillColor: AppColors.textfields.withOpacity(0.2),
                       hintText: 'Password',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 14),
+                        horizontal: 20,
+                        vertical: 14,
+                      ),
                     ),
-
-                    textInputAction: TextInputAction
-                        .done, // Set the action to 'done' for the last field
                   ),
                   const SizedBox(
                     height: 15,
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(right: 234),
+                    padding: EdgeInsets.only(right: 240),
                     child: Text(
                       'Phone Number',
                       style: TextStyle(
@@ -214,42 +269,53 @@ class EditProfile extends StatelessWidget {
                     ),
                   ),
                   TextFormField(
-                    obscureText: true,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: AppColors.darkgreen),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       filled: true,
                       fillColor: AppColors.textfields.withOpacity(0.2),
-                      hintText: 'Phone',
+                      hintText: 'Phone Number',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 14),
+                        horizontal: 20,
+                        vertical: 14,
+                      ),
                     ),
-
-                    textInputAction: TextInputAction
-                        .done, // Set the action to 'done' for the last field
+                    initialValue: _phoneNumber,
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 30,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 17, horizontal: 140),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      backgroundColor: AppColors.darkgreen,
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Update',
-                      style: TextStyle(fontSize: 17),
+                  Container(
+                    width: isSmallScreen ? double.infinity : 120,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            AppColors.darkgreen),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Implement your update profile logic here
+                      },
+                      child: const Text(
+                        'Update',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:design/pages/forgot_pass.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +30,15 @@ class _LoginPageState extends State<LoginPage> {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
+          //backgroundColor: Colors.green,
           content: Text('Signed in successfully!'),
-          duration: Duration(seconds: 1),
+          duration: Duration(seconds: 2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
         ),
       );
       // ignore: use_build_context_synchronously
@@ -60,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
     String name = "";
 
     return Padding(
-      padding: const EdgeInsets.only(top: 30, bottom: 20, left: 25, right: 20),
+      padding: const EdgeInsets.only(top: 30, bottom: 20, left: 30, right: 30),
       child: SingleChildScrollView(
         child: Form(
           child: Column(
@@ -113,14 +120,18 @@ class _LoginPageState extends State<LoginPage> {
                         focusedBorder: OutlineInputBorder(
                           borderSide:
                               const BorderSide(color: AppColors.darkgreen),
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        prefixIcon: Icon(Icons.email_outlined),
+                        prefixIcon: const Icon(Icons.email_outlined),
                         filled: true,
                         fillColor: AppColors.textfields.withOpacity(0.2),
-                        hintText: 'Email',
+                        label: const Text(
+                          'Email',
+                          style:
+                              TextStyle(decorationColor: AppColors.darkgreen),
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none,
                         ),
                         contentPadding: const EdgeInsets.symmetric(
@@ -142,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 height: 55,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 0, bottom: 0),
@@ -154,15 +165,19 @@ class _LoginPageState extends State<LoginPage> {
                         focusedBorder: OutlineInputBorder(
                           borderSide:
                               const BorderSide(color: AppColors.darkgreen),
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        prefixIcon: const Icon(Icons.lock),
+                        suffixIcon: const Icon(Icons.remove_red_eye),
                         filled: true,
                         fillColor: AppColors.textfields.withOpacity(0.2),
-                        hintText: 'Password',
+                        label: const Text(
+                          'Password',
+                          style:
+                              TextStyle(decorationColor: AppColors.darkgreen),
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none,
                         ),
                         contentPadding: const EdgeInsets.symmetric(
@@ -193,6 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Checkbox(
+                            activeColor: AppColors.darkgreen,
                             value: isRememberMe,
                             onChanged: (value) {
                               setState(() {
@@ -242,9 +258,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 156),
+        padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 150),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(30),
         ),
         backgroundColor: AppColors.darkgreen, // Replace with your desired color
       ),
@@ -279,10 +295,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-        const Text(
-          'or',
-          style: TextStyle(color: Colors.black, fontSize: 12),
+        const SizedBox(
+          height: 80,
         ),
+        const Text(
+          '© 2020 AIGROEDGE Technologies. All Rights Reserved. ',
+          style: TextStyle(color: Colors.grey, fontSize: 11),
+        )
       ],
     );
   }

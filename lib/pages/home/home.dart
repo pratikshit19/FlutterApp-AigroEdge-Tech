@@ -1,8 +1,8 @@
-import 'package:design/app_colors.dart';
-import 'package:design/pages/screens/analyticsScreen.dart';
-import 'package:design/pages/screens/cameraScreen.dart';
-import 'package:design/pages/screens/dashboard.dart';
-import 'package:design/pages/screens/profileScreen.dart';
+import 'package:design/utils/app_colors.dart';
+import 'package:design/screens/analyticsScreen.dart';
+import 'package:design/screens/cameraScreen.dart';
+import 'package:design/screens/dashboard.dart';
+import 'package:design/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';

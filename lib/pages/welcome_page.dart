@@ -1,4 +1,4 @@
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -43,10 +43,10 @@ class WelcomePage extends StatelessWidget {
                     },
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       padding: const EdgeInsets.symmetric(
-                        vertical: 20,
+                        vertical: 15,
                         horizontal: 130,
                       ),
                       side: const BorderSide(
@@ -75,10 +75,10 @@ class WelcomePage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.darkgreen,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       padding: const EdgeInsets.symmetric(
-                        vertical: 20,
+                        vertical: 15,
                         horizontal: 140,
                       ),
                     ),

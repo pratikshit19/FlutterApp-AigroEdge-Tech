@@ -1,4 +1,4 @@
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:design/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -95,17 +95,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   },
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     padding: const EdgeInsets.symmetric(
                       vertical: 12,
                       horizontal: 35,
                     ),
-                    side: const BorderSide(color: AppColors.themeColor),
+                    side: const BorderSide(color: AppColors.darkgreen),
                   ),
                   child: const Text(
                     'Skip',
-                    style: TextStyle(color: AppColors.themeColor),
+                    style: TextStyle(color: AppColors.darkgreen),
                   ),
                 ),
                 const SizedBox(
@@ -126,13 +126,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     padding: const EdgeInsets.symmetric(
                       vertical: 12,
                       horizontal: 35,
                     ),
-                    backgroundColor: AppColors.themeColor,
+                    backgroundColor: AppColors.darkgreen,
                   ),
                   child: Text(currentIndex == contents.length - 1
                       ? 'Continue'
@@ -156,7 +156,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: AppColors.themeColor,
+        color: AppColors.darkgreen,
       ),
     );
   }

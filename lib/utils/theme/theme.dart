@@ -1,4 +1,4 @@
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData.dark().copyWith(

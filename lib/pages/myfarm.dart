@@ -1,4 +1,4 @@
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +10,7 @@ class MyFarm extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -41,9 +42,23 @@ class MyFarm extends StatelessWidget {
                 children: [
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade400),
+                      //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: const Offset(4, 4),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-5, -5),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                      ],
                     ),
                     child: SizedBox(
                       height: 150,
@@ -92,13 +107,27 @@ class MyFarm extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade400),
+                      //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: const Offset(4, 4),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-5, -5),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                      ],
                     ),
                     child: SizedBox(
                       height: 150,
@@ -147,13 +176,27 @@ class MyFarm extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade400),
+                      //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: const Offset(4, 4),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-5, -5),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                      ],
                     ),
                     child: SizedBox(
                       height: 150,
@@ -202,13 +245,27 @@ class MyFarm extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade400),
+                      //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: const Offset(4, 4),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-5, -5),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                      ],
                     ),
                     child: SizedBox(
                       height: 150,
@@ -257,13 +314,27 @@ class MyFarm extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade400),
+                      //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
+                      color: Colors.grey.shade100,
+                      boxShadow: [
+                        //bottom left shadow - darker
+                        BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: const Offset(4, 4),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                        //top left shadow - lighter
+                        const BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-5, -5),
+                            blurRadius: 4,
+                            spreadRadius: 1),
+                      ],
                     ),
                     child: SizedBox(
                       height: 150,
@@ -312,7 +383,7 @@ class MyFarm extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                 ],
               ),

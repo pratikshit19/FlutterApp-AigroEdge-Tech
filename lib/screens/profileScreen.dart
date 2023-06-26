@@ -2,7 +2,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -174,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 16),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
+                          borderRadius: BorderRadius.circular(25)),
                       backgroundColor: AppColors.darkgreen,
                     ),
                     onPressed: () {
@@ -188,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(30),
                       color: Colors.grey.shade100,
                       boxShadow: [
                         //bottom left shadow - darker
@@ -234,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(30),
                       color: Colors.grey.shade100,
                       boxShadow: [
                         //bottom left shadow - darker
@@ -280,7 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(30),
                       color: Colors.grey.shade100,
                       boxShadow: [
                         //bottom left shadow - darker
@@ -328,7 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(30),
                       color: Colors.grey.shade100,
                       boxShadow: [
                         //bottom left shadow - darker
@@ -373,7 +373,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(30),
                       color: Colors.grey.shade100,
                       boxShadow: [
                         //bottom left shadow - darker
@@ -409,7 +409,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           IconButton(
                             icon: const Icon(Icons.arrow_forward_rounded),
                             color: Colors.black,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, MyRoutes.rateusRoute);
+                            },
                           ),
                         ],
                       ),
@@ -418,7 +421,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(30),
                       color: Colors.grey.shade100,
                       boxShadow: [
                         //bottom left shadow - darker
@@ -441,12 +444,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.only(left: 20),
                       child: Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.power_settings_new,
                             color: Colors.black,
                           ),
                           const SizedBox(width: 15),
-                          const Text(
+                          Text(
                             "Log Out",
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
@@ -463,7 +466,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     alignment: Alignment.center,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(25)),
+                                            BorderRadius.circular(30)),
                                     title: const Text(
                                       "Logout",
                                       textAlign: TextAlign.center,
@@ -482,7 +485,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               vertical: 5, horizontal: 16),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(10)),
+                                                  BorderRadius.circular(30)),
                                           backgroundColor: AppColors.darkgreen,
                                         ),
                                         onPressed: () =>
@@ -495,7 +498,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               vertical: 5, horizontal: 16),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(10)),
+                                                  BorderRadius.circular(30)),
                                           backgroundColor: AppColors.darkgreen,
                                         ),
                                         onPressed: () async {

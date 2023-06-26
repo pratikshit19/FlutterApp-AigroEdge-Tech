@@ -1,5 +1,5 @@
 // ignore: file_names
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +9,7 @@ class AddDevice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -49,9 +50,10 @@ class AddDevice extends StatelessWidget {
               const SizedBox(height: 20),
               Container(
                 height: 150,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey.shade400)),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  //border: Border.all(color: Colors.grey.shade400)
+                ),
               ),
               const SizedBox(height: 20),
               Container(
@@ -100,13 +102,18 @@ class AddDevice extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const TextField(
+              TextField(
                 decoration: InputDecoration(
-                  hintText: "Add you device ID",
-                  constraints: BoxConstraints(
+                  hintText: "Add your device ID",
+                  constraints: const BoxConstraints(
                     maxHeight: 50,
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                  fillColor: Colors.white,
+                  filled: true,
                 ),
               ),
               const SizedBox(height: 20),
@@ -121,11 +128,16 @@ class AddDevice extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const TextField(
+              TextField(
                 decoration: InputDecoration(
                   hintText: "Add you device installation date",
-                  constraints: BoxConstraints(maxHeight: 50),
-                  border: OutlineInputBorder(),
+                  constraints: const BoxConstraints(maxHeight: 50),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                  fillColor: Colors.white,
+                  filled: true,
                 ),
               ),
               const SizedBox(height: 60),

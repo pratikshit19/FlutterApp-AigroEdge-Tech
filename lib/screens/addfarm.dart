@@ -1,5 +1,5 @@
 // ignore: file_names
-import 'package:design/app_colors.dart';
+import 'package:design/utils/app_colors.dart';
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +18,7 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -285,26 +286,28 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Row(
+              const Row(
                 children: [
                   TextField(
                     decoration: InputDecoration(
-                      constraints:
-                          const BoxConstraints(maxHeight: 50, maxWidth: 170),
+                      fillColor: Colors.white,
+                      filled: true,
+                      constraints: BoxConstraints(maxHeight: 50, maxWidth: 170),
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade400),
+                        borderSide: BorderSide.none,
                       ),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 10,
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      constraints:
-                          const BoxConstraints(maxHeight: 50, maxWidth: 170),
+                      fillColor: Colors.white,
+                      filled: true,
+                      constraints: BoxConstraints(maxHeight: 50, maxWidth: 170),
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade400),
+                        borderSide: BorderSide.none,
                       ),
                     ),
                   ),
@@ -372,11 +375,12 @@ class _AddFarmScreenState extends State<AddFarmScreen> {
                       ),
                       const TableCell(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(left: 0),
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: 'DD/MM/YY',
-                            ),
+                                hintText: 'DD/MM/YY',
+                                fillColor: Colors.white,
+                                filled: true),
                           ),
                         ),
                       ),

@@ -1,7 +1,7 @@
 import 'package:design/utils/routes.dart';
 import 'package:flutter/material.dart';
 
-import '../../app_colors.dart';
+import '../utils/app_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   final VoidCallback onSplashScreenComplete; // Callback function
@@ -111,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen>
                     horizontal: 110,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                   backgroundColor: AppColors.darkgreen,
                 ),

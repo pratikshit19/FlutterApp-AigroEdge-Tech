@@ -1,5 +1,5 @@
 import 'package:design/pages/home/home.dart';
-import 'package:design/pages/screens/splash.dart';
+import 'package:design/screens/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
