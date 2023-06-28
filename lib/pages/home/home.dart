@@ -1,3 +1,4 @@
+import 'package:design/pages/realtime.dart';
 import 'package:design/utils/app_colors.dart';
 import 'package:design/screens/analyticsScreen.dart';
 import 'package:design/screens/cameraScreen.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final User? user = FirebaseAuth.instance.currentUser;
   int myIndex = 0;
   List<Widget> widgetList = [
-    const Dashboard(),
+    RealtimeDashboard(),
     const AnalyticsScreen(),
     const CameraScreen(),
     const ProfileScreen(),

@@ -7,6 +7,8 @@ class OnboardingContent {
 
 List<OnboardingContent> contents = [
   OnboardingContent(
+      image: 'assets/images/aigro_logo.png', description: 'Welcome'),
+  OnboardingContent(
     image: 'assets/images/stock_img1.png',
     description:
         'Empowering Farmers with advanced\nanalytics solutions that provide\nvaluable insights into their farming\noperations',

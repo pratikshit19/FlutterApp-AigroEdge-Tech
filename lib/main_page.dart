@@ -1,4 +1,5 @@
 import 'package:design/pages/home/home.dart';
+import 'package:design/pages/onboarding.dart';
 import 'package:design/pages/realtime.dart';
 import 'package:design/screens/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,11 +15,9 @@ class MainPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return RealtimeDataScreen();
+            return HomePage();
           } else {
-            return SplashScreen(
-              onSplashScreenComplete: () {},
-            );
+            return OnboardingPage();
           }
         },
       ),

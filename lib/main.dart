@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.editprofRoute: (context) => const EditProfile(),
             MyRoutes.historyRoute: (context) => const History(),
             MyRoutes.rateusRoute: (context) => const RateUs(),
-            MyRoutes.realtimeRoute: (context) => RealtimeDataScreen(),
+            MyRoutes.realtimeRoute: (context) => RealtimeDashboard(),
             MyRoutes.onboardingRoute: (context) => const OnboardingPage(),
             MyRoutes.splashRoute: (context) => SplashScreen(
                   onSplashScreenComplete: () {},
