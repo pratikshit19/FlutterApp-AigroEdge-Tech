@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -17,16 +18,44 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  /*---------------VARIABLES------------------*/
   late String fullName = '';
   late String email = '';
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
 
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(28.54744274365559, 77.3326009898075),
+    zoom: 15,
+  );
+  final DatabaseReference databaseReference = FirebaseDatabase.instance
+      .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com')
+      .child('WiFi_Devices')
+      .child('AE01')
+      .child('Last Update');
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  String? selectedValue;
+  List<String> listItem = [];
+  late bool isLoading;
+
+  /*-----------------------------INIT METHOD----------------*/
   @override
   void initState() {
+    isLoading = true;
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
     super.initState();
     signIn();
     fetchUserData();
+    fetchDataFromDatabase();
   }
 
+  /*--------------------METHODS---------------------*/
+  //signIn method
   Future<void> signIn() async {
     try {
       UserCredential userCredential =
@@ -41,6 +70,7 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
+  //fetch user data method
   Future<void> fetchUserData() async {
     try {
       final User? user = FirebaseAuth.instance.currentUser;
@@ -72,26 +102,34 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  Future<void> fetchDataFromDatabase() async {
+    final DatabaseReference databaseReference = FirebaseDatabase.instance
+        .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com')
+        .child('WiFi_Devices');
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(28.54744274365559, 77.3326009898075),
-    zoom: 15,
-  );
-  final DatabaseReference databaseReference = FirebaseDatabase.instance
-      .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com')
-      .child('WiFi_Devices')
-      .child('AE01')
-      .child('Last Update');
-  final User? user = FirebaseAuth.instance.currentUser;
+    try {
+      DatabaseEvent event = await databaseReference.once();
+      DataSnapshot snapshot = event.snapshot;
+      Map<dynamic, dynamic>? data = snapshot.value as Map?;
+      if (data != null) {
+        setState(() {
+          listItem.clear();
+          data.forEach((key, value) {
+            listItem.add(key.toString());
+          });
+          selectedValue = listItem.isNotEmpty ? listItem[0] : null;
+        });
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+  }
 
-  String? selectedValue;
-  List<String> listItem = ['Device 1', 'Device 2', 'Device 3'];
-
+  /*---------------BUILD METHOD-----------------*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       drawer: Drawer(
         width: 250,
         child: ListView(
@@ -245,7 +283,7 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         elevation: 0,
         toolbarHeight: 60,
         leading: Builder(
@@ -277,146 +315,289 @@ class _DashboardState extends State<Dashboard> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: AppColors.textfields.withOpacity(0.3),
-              ),
-              width: double.infinity,
-              height: 140,
-              child: Expanded(
-                child: GoogleMap(
-                  mapType: MapType.terrain,
-                  initialCameraPosition: _kGooglePlex,
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              onTap: () {
-                //Navigator.pushNamed(context, MyRoutes.mycropsRoute);
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.darkgreen, AppColors.textfields],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.darkgreen,
-                ),
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Row(
-                    children: [
-                      DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          dropdownColor: Colors.white,
-                          value: selectedValue,
-                          hint: const Text(
-                            'Select Device',
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ), // Optional: Text to display when no option is selected
-                          onChanged: (newValue) {
-                            setState(() {
-                              selectedValue = newValue;
-                            });
+        child: isLoading
+            ? const NewSkeleton()
+            : Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        // color: AppColors.textfields.withOpacity(0.3),
+                      ),
+                      width: double.infinity,
+                      height: 140,
+                      child: Expanded(
+                        child: GoogleMap(
+                          mapType: MapType.terrain,
+                          initialCameraPosition: _kGooglePlex,
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
                           },
-
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                          ),
-                          items: listItem.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,
-                                  style: const TextStyle(color: Colors.black)),
-                            );
-                          }).toList(),
                         ),
                       ),
-                      const SizedBox(
-                        width: 100,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-                padding: const EdgeInsets.only(left: 0, right: 20),
-                child: StreamBuilder(
-                  stream: databaseReference.onValue,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final data = snapshot.data!.snapshot.value;
-                      final epochTime = data != null &&
-                              (data as Map<dynamic, dynamic>)['DT'] != null
-                          ? int.parse((data)['DT'].toString())
-                          : null;
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 7, right: 7),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [AppColors.darkgreen, AppColors.textfields],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.darkgreen,
+                        ),
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Row(
+                            children: [
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  dropdownColor: Colors.white,
+                                  value: selectedValue,
+                                  hint: const Text(
+                                    'Select Device',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ), // Optional: Text to display when no option is selected
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      selectedValue = newValue;
+                                    });
+                                  },
 
-                      String formattedDateTime = '';
-                      if (epochTime != null) {
-                        final dateTime =
-                            DateTime.fromMillisecondsSinceEpoch(epochTime);
-                        formattedDateTime = dateTime.toString();
-                      }
-
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 100),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(right: 45),
-                              child: Text(
-                                "Device Updates",
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2),
-                              child: Text(
-                                'Last updated on: $formattedDateTime',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey.shade500,
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
+                                  ),
+                                  items: listItem.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                          style: const TextStyle(
+                                              color: Colors.black)),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                width: 100,
+                              ),
+                            ],
+                          ),
                         ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  },
-                )),
-            const SizedBox(
-              height: 0,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 0, right: 20),
+                        child: StreamBuilder(
+                          stream: databaseReference.onValue,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              final data = snapshot.data!.snapshot.value;
+                              final epochTime = data != null &&
+                                      (data as Map<dynamic, dynamic>)['DT'] !=
+                                          null
+                                  ? int.parse((data)['DT'].toString())
+                                  : null;
+
+                              String formattedDateTime = '';
+                              if (epochTime != null) {
+                                final dateTime =
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        epochTime);
+                                formattedDateTime = dateTime.toString();
+                              }
+
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 125),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 45),
+                                      child: Text(
+                                        "Device Updates",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 2),
+                                      child: Text(
+                                        'Last updated on: $formattedDateTime',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.grey.shade500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return const Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 180),
+                                    child: Column(
+                                      children: [
+                                        Skeleton(
+                                          width: 200,
+                                          height: 30,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 120),
+                                    child: Skeleton(
+                                      width: 250,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                          },
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: buildWidget(context),
+                    ),
+                  ],
+                ),
+              ),
+      ),
+    );
+  }
+}
+
+class NewSkeleton extends StatelessWidget {
+  const NewSkeleton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          Skeleton(
+            height: 140,
+            width: double.infinity,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Skeleton(
+            width: double.infinity,
+            height: 50,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 180),
+            child: Column(
+              children: [
+                Skeleton(
+                  width: 200,
+                  height: 30,
+                ),
+              ],
             ),
-            Expanded(
-              child: buildWidget(context),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 120),
+            child: Skeleton(
+              width: 250,
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 5),
+            child: Row(
+              children: [
+                Skeleton(
+                  height: 165,
+                  width: 165,
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Skeleton(
+                  height: 165,
+                  width: 165,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 5),
+            child: Row(
+              children: [
+                Skeleton(
+                  height: 165,
+                  width: 165,
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Skeleton(
+                  height: 165,
+                  width: 165,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Skeleton extends StatelessWidget {
+  const Skeleton({
+    super.key,
+    this.height,
+    this.width,
+  });
+  final double? height, width;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      width: width,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.04),
+        borderRadius: BorderRadius.circular(15),
       ),
     );
   }
@@ -426,7 +607,7 @@ Widget buildWidget(BuildContext context) {
   final DatabaseReference databaseReference = FirebaseDatabase.instance
       .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com')
       .child('WiFi_Devices')
-      .child('AE01')
+      .child('AF01')
       .child('Last Update');
 
   return StreamBuilder(
@@ -514,7 +695,10 @@ Widget buildWidget(BuildContext context) {
                                     } else if (snapshot.hasError) {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
-                                      return const CircularProgressIndicator();
+                                      return const Skeleton(
+                                        height: 165,
+                                        width: 165,
+                                      );
                                     }
                                   },
                                 ),
@@ -599,7 +783,10 @@ Widget buildWidget(BuildContext context) {
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return const CircularProgressIndicator();
+                                return const Skeleton(
+                                  height: 165,
+                                  width: 165,
+                                );
                               }
                             },
                           ),
@@ -695,7 +882,10 @@ Widget buildWidget(BuildContext context) {
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return const CircularProgressIndicator();
+                                return const Skeleton(
+                                  height: 165,
+                                  width: 165,
+                                );
                               }
                             },
                           ),
@@ -787,7 +977,10 @@ Widget buildWidget(BuildContext context) {
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return const CircularProgressIndicator();
+                                return const Skeleton(
+                                  height: 165,
+                                  width: 165,
+                                );
                               }
                             },
                           ),
@@ -871,7 +1064,10 @@ Widget buildWidget(BuildContext context) {
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return const CircularProgressIndicator();
+                                return const Skeleton(
+                                  height: 165,
+                                  width: 165,
+                                );
                               }
                             },
                           ),
@@ -952,7 +1148,10 @@ Widget buildWidget(BuildContext context) {
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return const CircularProgressIndicator();
+                                return const Skeleton(
+                                  height: 165,
+                                  width: 165,
+                                );
                               }
                             },
                           ),
@@ -1037,7 +1236,10 @@ Widget buildWidget(BuildContext context) {
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return const CircularProgressIndicator();
+                                return const Skeleton(
+                                  height: 165,
+                                  width: 165,
+                                );
                               }
                             },
                           ),
@@ -1118,7 +1320,10 @@ Widget buildWidget(BuildContext context) {
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return const CircularProgressIndicator();
+                                return const Skeleton(
+                                  height: 165,
+                                  width: 165,
+                                );
                               }
                             },
                           ),
@@ -1134,7 +1339,7 @@ Widget buildWidget(BuildContext context) {
       } else if (snapshot.hasError) {
         return Text('Error: ${snapshot.error}');
       } else {
-        return const CircularProgressIndicator();
+        return const Skeleton();
       }
     },
   );

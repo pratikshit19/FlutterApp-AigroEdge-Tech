@@ -10,9 +10,9 @@ class MyFarm extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: AppColors.background,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.background,
           elevation: 0,
           toolbarHeight: 60,
           leading: IconButton(
@@ -44,20 +44,12 @@ class MyFarm extends StatelessWidget {
                     decoration: BoxDecoration(
                       //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
-                        //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(4, 4),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-5, -5),
-                            blurRadius: 4,
-                            spreadRadius: 1),
+                            offset: Offset(0, 4),
+                            color: Colors.grey.shade300,
+                            blurRadius: 3)
                       ],
                     ),
                     child: SizedBox(
@@ -113,20 +105,12 @@ class MyFarm extends StatelessWidget {
                     decoration: BoxDecoration(
                       //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
-                        //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(4, 4),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-5, -5),
-                            blurRadius: 4,
-                            spreadRadius: 1),
+                            offset: Offset(0, 4),
+                            color: Colors.grey.shade300,
+                            blurRadius: 3)
                       ],
                     ),
                     child: SizedBox(
@@ -182,20 +166,12 @@ class MyFarm extends StatelessWidget {
                     decoration: BoxDecoration(
                       //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
-                        //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(4, 4),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-5, -5),
-                            blurRadius: 4,
-                            spreadRadius: 1),
+                            offset: Offset(0, 4),
+                            color: Colors.grey.shade300,
+                            blurRadius: 3)
                       ],
                     ),
                     child: SizedBox(
@@ -251,20 +227,12 @@ class MyFarm extends StatelessWidget {
                     decoration: BoxDecoration(
                       //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
-                        //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(4, 4),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-5, -5),
-                            blurRadius: 4,
-                            spreadRadius: 1),
+                            offset: Offset(0, 4),
+                            color: Colors.grey.shade300,
+                            blurRadius: 3)
                       ],
                     ),
                     child: SizedBox(
@@ -320,20 +288,12 @@ class MyFarm extends StatelessWidget {
                     decoration: BoxDecoration(
                       //border: Border.all(color: Colors.grey.shade400),
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
-                        //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(4, 4),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-5, -5),
-                            blurRadius: 4,
-                            spreadRadius: 1),
+                            offset: Offset(0, 4),
+                            color: Colors.grey.shade300,
+                            blurRadius: 3)
                       ],
                     ),
                     child: SizedBox(

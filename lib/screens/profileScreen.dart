@@ -82,9 +82,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         elevation: 0,
         toolbarHeight: 60,
         leading: IconButton(
@@ -176,6 +176,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25)),
                       backgroundColor: AppColors.darkgreen,
+                      elevation:
+                          4, // Adjust the elevation value to achieve the desired shadow effect
+                      shadowColor: Colors.black,
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, MyRoutes.editprofRoute);
@@ -189,20 +192,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
                         //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(2, 2),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-2, -2),
+                            color: Colors.grey.shade300,
+                            offset: const Offset(0, 3),
                             blurRadius: 3,
                             spreadRadius: 1),
+                        //top left shadow - lighter
                       ],
                     ),
                     width: screenWidth,
@@ -231,24 +229,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
                         //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(2, 2),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-2, -2),
+                            color: Colors.grey.shade300,
+                            offset: const Offset(0, 3),
                             blurRadius: 3,
                             spreadRadius: 1),
+                        //top left shadow - lighter
                       ],
                     ),
                     width: screenWidth,
@@ -277,24 +270,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
                         //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(2, 2),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-2, -2),
+                            color: Colors.grey.shade300,
+                            offset: const Offset(0, 3),
                             blurRadius: 3,
                             spreadRadius: 1),
+                        //top left shadow - lighter
                       ],
                     ),
                     width: screenWidth,
@@ -325,24 +313,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
                         //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(2, 2),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-2, -2),
+                            color: Colors.grey.shade300,
+                            offset: const Offset(0, 3),
                             blurRadius: 3,
                             spreadRadius: 1),
+                        //top left shadow - lighter
                       ],
                     ),
                     width: screenWidth,
@@ -370,24 +353,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
                         //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(2, 2),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-2, -2),
+                            color: Colors.grey.shade300,
+                            offset: const Offset(0, 3),
                             blurRadius: 3,
                             spreadRadius: 1),
+                        //top left shadow - lighter
                       ],
                     ),
                     width: screenWidth,
@@ -418,24 +396,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       boxShadow: [
                         //bottom left shadow - darker
                         BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(2, 2),
-                            blurRadius: 4,
-                            spreadRadius: 1),
-                        //top left shadow - lighter
-                        const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-2, -2),
+                            color: Colors.grey.shade300,
+                            offset: const Offset(0, 3),
                             blurRadius: 3,
                             spreadRadius: 1),
+                        //top left shadow - lighter
                       ],
                     ),
                     width: screenWidth,
@@ -444,12 +417,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.only(left: 20),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.power_settings_new,
                             color: Colors.black,
                           ),
                           const SizedBox(width: 15),
-                          Text(
+                          const Text(
                             "Log Out",
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
@@ -467,9 +440,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(30)),
-                                    title: const Text(
-                                      "Logout",
-                                      textAlign: TextAlign.center,
+                                    title: const Column(
+                                      children: [
+                                        Text(
+                                          "Logout",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Divider(),
+                                      ],
                                     ),
                                     content: const Text(
                                       "Are you sure you want to logout?",
@@ -479,35 +459,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 16),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          backgroundColor: AppColors.darkgreen,
+                                      const Divider(),
+                                      Center(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              width: 40,
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 7,
+                                                        horizontal: 50),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30)),
+                                                backgroundColor:
+                                                    AppColors.darkgreen,
+                                              ),
+                                              onPressed: () async {
+                                                await FirebaseAuth.instance
+                                                    .signOut();
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.of(context).pushNamed(
+                                                    MyRoutes.loginRoute);
+                                              },
+                                              child: const Text("Logout"),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 7,
+                                                        horizontal: 50),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30)),
+                                                backgroundColor:
+                                                    AppColors.darkgreen,
+                                              ),
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              child: const Text("Cancel"),
+                                            ),
+                                          ],
                                         ),
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: const Text("Cancel"),
-                                      ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 16),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          backgroundColor: AppColors.darkgreen,
-                                        ),
-                                        onPressed: () async {
-                                          await FirebaseAuth.instance.signOut();
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.of(context)
-                                              .pushNamed(MyRoutes.loginRoute);
-                                        },
-                                        child: const Text("Logout"),
                                       ),
                                       const SizedBox(
                                         width: 40,

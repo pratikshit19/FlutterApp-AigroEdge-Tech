@@ -26,12 +26,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown.shade50,
+      //backgroundColor: Colors.brown.shade50,
       body: Center(
         child: widgetList[myIndex],
       ),
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: AppColors.background,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
           child: GNav(
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
               },
               padding: const EdgeInsets.all(12),
               gap: 5,
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.background,
               tabBackgroundColor: AppColors.textfields.withOpacity(0.3),
               tabs: const [
                 GButton(icon: Icons.home, text: 'Home'),

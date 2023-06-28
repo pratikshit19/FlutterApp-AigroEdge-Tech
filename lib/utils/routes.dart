@@ -14,4 +14,5 @@ class MyRoutes {
   static String splashRoute = "/splashprof";
   static String onboardingRoute = "/onboarding";
   static String rateusRoute = "/rateus";
+  static String realtimeRoute = "/realtime";
 }

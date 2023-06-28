@@ -309,7 +309,7 @@ class _SignupPageState extends State<SignupPage> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 145),
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 145),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
                   backgroundColor: AppColors.darkgreen,

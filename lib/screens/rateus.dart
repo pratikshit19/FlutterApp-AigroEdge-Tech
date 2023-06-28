@@ -92,7 +92,41 @@ class RateUs extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30)),
                     backgroundColor: AppColors.darkgreen,
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            titlePadding: const EdgeInsets.all(10),
+                            alignment: Alignment.center,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            title: const Text(
+                              "Thank You",
+                              textAlign: TextAlign.center,
+                            ),
+                            content: const Text(
+                              "Your review is appreciated!",
+                              textAlign: TextAlign.center,
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 15),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  backgroundColor: AppColors.darkgreen,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Center(child: const Text("Okay")),
+                              ),
+                            ],
+                          );
+                        });
+                  },
                   child: const Text("Submit"),
                 ),
               ],

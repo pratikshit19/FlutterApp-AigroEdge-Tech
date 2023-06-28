@@ -58,8 +58,9 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         elevation: 0,
         toolbarHeight: 60,
         leading: IconButton(
@@ -85,7 +86,7 @@ class _EditProfileState extends State<EditProfile> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               final double screenWidth = constraints.maxWidth;
@@ -102,11 +103,12 @@ class _EditProfileState extends State<EditProfile> {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.white, width: 2),
                             shape: BoxShape.circle,
+                            //borderRadius: BorderRadius.circular(50),
                             color: Colors.grey.withOpacity(0.3),
                           ),
                           child: _imageFile != null
                               ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(200),
+                                  borderRadius: BorderRadius.circular(400),
                                   child: Image.file(
                                     _imageFile!,
                                     fit: BoxFit.cover,
@@ -119,17 +121,6 @@ class _EditProfileState extends State<EditProfile> {
                                   size: 50,
                                   color: Colors.white,
                                 ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: -10,
-                          child: IconButton(
-                            onPressed: _pickImageFromGallery,
-                            icon: const Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -297,6 +288,12 @@ class _EditProfileState extends State<EditProfile> {
                     height: 50,
                     child: ElevatedButton(
                       style: ButtonStyle(
+                        elevation: MaterialStateProperty.all<double>(
+                            4), // Adjust the elevation value as needed
+                        shadowColor: MaterialStateProperty.all<Color>(
+                            Colors.grey), // Set the shadow color
+                        overlayColor: MaterialStateProperty.all<Color>(
+                            Colors.black.withOpacity(0.2)),
                         backgroundColor: MaterialStateProperty.all<Color>(
                             AppColors.darkgreen),
                         shape:

@@ -9,9 +9,9 @@ class AddDevice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         elevation: 0,
         toolbarHeight: 60,
         leading: IconButton(
@@ -149,7 +149,58 @@ class AddDevice extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15)),
                   backgroundColor: AppColors.darkgreen,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        titlePadding: const EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        title: Column(
+                          children: [
+                            const Text(
+                              "Congratulations!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const Divider(),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Image.asset(
+                              'assets/icons/Vectortick.png',
+                            )
+                          ],
+                        ),
+                        content: const Text(
+                          "Device added successfully!",
+                          textAlign: TextAlign.center,
+                        ),
+                        actions: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Divider(),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 40),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30)),
+                                backgroundColor: AppColors.darkgreen,
+                              ),
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text("Okay"),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 child: const Text(
                   'Add',
                   style: TextStyle(fontSize: 17),

@@ -169,6 +169,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  fade_shimmer:
+    dependency: "direct main"
+    description:
+      name: fade_shimmer
+      sha256: "7410220ba0ccfa3abef630ec64e2398b9e136fbeb6fe2f8ce86d939f46b3491e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   fake_async:
     dependency: transitive
     description:
@@ -757,6 +765,14 @@ packages:
     description:
       name: sanitize_html
       sha256: "0a445f19bbaa196f5a4f93461aa066b94e6e025622eb1e9bc77872a5e25233a5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "1f1009b5845a1f88f1c5630212279540486f97409e9fc3f63883e71070d107bf"
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"

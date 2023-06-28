@@ -4,6 +4,7 @@ import 'package:design/pages/login.dart';
 import 'package:design/pages/mydevices.dart';
 import 'package:design/pages/myfarm.dart';
 import 'package:design/pages/onboarding.dart';
+import 'package:design/pages/realtime.dart';
 import 'package:design/screens/adddev.dart';
 import 'package:design/screens/addfarm.dart';
 import 'package:design/screens/dashboard.dart';
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.editprofRoute: (context) => const EditProfile(),
             MyRoutes.historyRoute: (context) => const History(),
             MyRoutes.rateusRoute: (context) => const RateUs(),
+            MyRoutes.realtimeRoute: (context) => RealtimeDataScreen(),
             MyRoutes.onboardingRoute: (context) => const OnboardingPage(),
             MyRoutes.splashRoute: (context) => SplashScreen(
                   onSplashScreenComplete: () {},
@@ -83,7 +85,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: customColor, // Use the custom MaterialColor
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            fontFamily: GoogleFonts.poppins().fontFamily,
+            fontFamily: GoogleFonts.interTight().fontFamily,
           ),
         );
       },

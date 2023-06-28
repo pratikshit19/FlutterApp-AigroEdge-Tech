@@ -9,6 +9,7 @@ class AppColors {
   static const Color textfields = Color(0xff629F7B);
   static const Color widgets = Color(0xff8BA571);
   static const Color darkgreen = Color(0xff105a4b);
+  static const Color background = Color(0xfff2f1ef);
 }
 
 /*List<Color> gridColors = [
