@@ -36,23 +36,34 @@ class _EditProfileState extends State<EditProfile> {
   void _loadUserDetails() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      final userData = await FirebaseFirestore.instance
+      final userSnapshot = await FirebaseFirestore.instance
           .collection('User')
           .doc(currentUser.uid)
           .get();
-      setState(() {
-        _fullName = userData['fullName'] ?? '';
-        _email = userData['email'] ?? '';
-        _phoneNumber = userData['phoneNumber'] ?? '';
-        _password = userData['password'] ?? '';
-      });
+
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data() as Map<dynamic, dynamic>;
+
+        setState(() {
+          _fullName = userData['Full Name'] ?? '';
+          _email = userData['Email'] ?? '';
+          _phoneNumber = userData['Phone Number'] ?? '';
+          _password = userData['Password'] ?? '';
+          print(
+              'Updated user details: $_fullName, $_email, $_phoneNumber, $_password');
+          print('Full Name: $_fullName');
+          print('Email: $_email');
+          print('Phone Number: $_phoneNumber');
+          print('Password: $_password');
+        });
+      }
     }
   }
 
   @override
   void initState() {
-    super.initState();
     _loadUserDetails();
+    super.initState();
   }
 
   @override
@@ -103,7 +114,6 @@ class _EditProfileState extends State<EditProfile> {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.white, width: 2),
                             shape: BoxShape.circle,
-                            //borderRadius: BorderRadius.circular(50),
                             color: Colors.grey.withOpacity(0.3),
                           ),
                           child: _imageFile != null
@@ -122,21 +132,35 @@ class _EditProfileState extends State<EditProfile> {
                                   color: Colors.white,
                                 ),
                         ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              onPressed: _pickImageFromGallery,
+                              icon: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  TextButton(
-                    onPressed: _pickImageFromGallery,
-                    child: const Text(
-                      'Edit Profile Photo',
-                      style: TextStyle(
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
-                        color: Colors.grey,
-                      ),
+                  const Text(
+                    'Edit Profile Photo',
+                    style: TextStyle(
+                      fontSize: 12,
+                      decoration: TextDecoration.underline,
+                      color: Colors.grey,
                     ),
                   ),
                   const SizedBox(
@@ -173,6 +197,11 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                     initialValue: _fullName,
+                    onChanged: (value) {
+                      setState(() {
+                        _fullName = value;
+                      });
+                    },
                   ),
                   const SizedBox(
                     height: 15,
@@ -208,6 +237,11 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                     initialValue: _email,
+                    onChanged: (value) {
+                      setState(() {
+                        _email = value;
+                      });
+                    },
                   ),
                   const SizedBox(
                     height: 15,
@@ -244,6 +278,11 @@ class _EditProfileState extends State<EditProfile> {
                         vertical: 14,
                       ),
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        _password = value;
+                      });
+                    },
                   ),
                   const SizedBox(
                     height: 15,
@@ -279,6 +318,11 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                     initialValue: _phoneNumber,
+                    onChanged: (value) {
+                      setState(() {
+                        _phoneNumber = value;
+                      });
+                    },
                   ),
                   const SizedBox(
                     height: 30,
@@ -288,10 +332,9 @@ class _EditProfileState extends State<EditProfile> {
                     height: 50,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        elevation: MaterialStateProperty.all<double>(
-                            4), // Adjust the elevation value as needed
-                        shadowColor: MaterialStateProperty.all<Color>(
-                            Colors.grey), // Set the shadow color
+                        elevation: MaterialStateProperty.all<double>(4),
+                        shadowColor:
+                            MaterialStateProperty.all<Color>(Colors.grey),
                         overlayColor: MaterialStateProperty.all<Color>(
                             Colors.black.withOpacity(0.2)),
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -304,7 +347,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       onPressed: () {
-                        // Implement your update profile logic here
+                        _updateUserProfile();
                       },
                       child: const Text(
                         'Update',
@@ -322,5 +365,21 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  void _updateUserProfile() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userRef =
+          FirebaseFirestore.instance.collection('User').doc(currentUser.uid);
+      await userRef.update({
+        'Full Name': _fullName,
+        'Email': _email,
+        'Phone Number': _phoneNumber,
+      });
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully')));
+    }
   }
 }

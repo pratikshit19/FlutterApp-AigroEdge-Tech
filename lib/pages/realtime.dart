@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 import '../utils/routes.dart';
 
@@ -24,9 +25,9 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
     target: LatLng(28.54744274365559, 77.3326009898075),
     zoom: 15,
   );
+
   final databaseReference = FirebaseDatabase.instance
       .refFromURL('https://sigfox-4a13d-default-rtdb.firebaseio.com');
-  final User? user = FirebaseAuth.instance.currentUser;
 
   //for epoch time
   final DatabaseReference _databaseReference = FirebaseDatabase.instance
@@ -34,6 +35,9 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
       .child('WiFi_Devices')
       .child('AE01')
       .child('Last Update');
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  //For filtering dropdown
 
   List<String> dropdownItems = [];
   String selectedDropdownItem = '';
@@ -48,10 +52,12 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
         isLoading = false;
       });
     });
-    super.initState();
+    fetchUserData();
+    signIn();
     fetchDataFromDatabase();
     // Fetch initial device list from the database
     fetchDeviceListFromDatabase();
+    super.initState();
   }
 
   Future<void> signIn() async {
@@ -381,20 +387,36 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                         ),
                         width: double.infinity,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 10),
                           child: Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: DropdownButton<String>(
-                                  value: selectedDropdownItem,
-                                  items: dropdownItems.map((item) {
-                                    return DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(item),
-                                    );
-                                  }).toList(),
-                                  onChanged: updateSelectedDropdownItem,
+                                padding: const EdgeInsets.all(10.0),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    iconEnabledColor: Colors.white,
+                                    elevation: 10,
+                                    dropdownColor: AppColors.darkgreen,
+                                    hint: const Text(
+                                      'Select Device',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    value: selectedDropdownItem,
+                                    items: dropdownItems.map((item) {
+                                      return DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(
+                                            color: item == selectedDropdownItem
+                                                ? Colors.white
+                                                : Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: updateSelectedDropdownItem,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -497,7 +519,7 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 10),
+                                  horizontal: 5, vertical: 15),
                               child: Column(
                                 children: [
                                   Row(
@@ -506,25 +528,42 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                                         height: 165,
                                         width: 165,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
                                         padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              'Soil Temperature',
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              filteredData['ST']?.toString() ??
-                                                  'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
-                                            ),
-                                          ],
+                                        child: CircularPercentIndicator(
+                                          radius: 55,
+                                          lineWidth: 10,
+                                          percent: filteredData['BT'] != null
+                                              ? double.parse(
+                                                      filteredData['BT']) /
+                                                  100
+                                              : 0,
+                                          center: Text(
+                                            (filteredData['BT']?.toString() ??
+                                                'N/A'),
+                                            style: const TextStyle(
+                                                fontSize: 30,
+                                                color: AppColors.darkgreen),
+                                          ),
+                                          progressColor: AppColors.darkgreen,
+                                          backgroundColor: Colors.white,
+                                          circularStrokeCap:
+                                              CircularStrokeCap.round,
                                         ),
                                       ),
                                       const SizedBox(width: 20),
@@ -532,81 +571,53 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                                         height: 165,
                                         width: 165,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
-                                        ),
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              'Humidity',
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              filteredData['H']?.toString() ??
-                                                  'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 165,
-                                        width: 165,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
-                                        ),
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              'Battery',
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              filteredData['BT']?.toString() ??
-                                                  'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width: 20),
-                                      Container(
-                                        height: 165,
-                                        width: 165,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
                                         padding: const EdgeInsets.all(16.0),
                                         child: Column(
                                           children: [
                                             const Text(
                                               'Soil pH',
-                                              style: TextStyle(fontSize: 20),
+                                              style: TextStyle(fontSize: 18),
                                             ),
-                                            Text(
-                                              filteredData['PH']?.toString() ??
-                                                  'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/ph-meter.png',
+                                                  height: 60,
+                                                  width: 40,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  filteredData['PH']
+                                                          ?.toString() ??
+                                                      'N/A',
+                                                  style: const TextStyle(
+                                                    fontSize: 42,
+                                                    fontFamily:
+                                                        'ProximaNova-Regular',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
@@ -622,23 +633,171 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                                         height: 165,
                                         width: 165,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(
+                                          children: [
+                                            const Text(
+                                              'Soil Temperature',
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/soiltemp.png',
+                                                  height: 60,
+                                                  width: 40,
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  filteredData['ST']
+                                                          ?.toString() ??
+                                                      'N/A',
+                                                  style: const TextStyle(
+                                                    fontSize: 45,
+                                                    fontFamily:
+                                                        'ProximaNova-Regular',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
+                                      ),
+                                      const SizedBox(width: 20),
+                                      Container(
+                                        height: 165,
+                                        width: 165,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(
+                                          children: [
+                                            const Text(
+                                              'Humidity',
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/humidity.png',
+                                                  height: 60,
+                                                  width: 40,
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  filteredData['H']
+                                                          ?.toString() ??
+                                                      'N/A',
+                                                  style: const TextStyle(
+                                                    fontSize: 45,
+                                                    fontFamily:
+                                                        'ProximaNova-Regular',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 165,
+                                        width: 165,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
                                         padding: const EdgeInsets.all(16.0),
                                         child: Column(
                                           children: [
                                             const Text(
                                               'Soil Moisture',
-                                              style: TextStyle(fontSize: 20),
+                                              style: TextStyle(fontSize: 18),
                                             ),
-                                            Text(
-                                              filteredData['SM']?.toString() ??
-                                                  'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/moisture.png',
+                                                  height: 60,
+                                                  width: 40,
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  filteredData['SM']
+                                                          ?.toString() ??
+                                                      'N/A',
+                                                  style: const TextStyle(
+                                                    fontSize: 45,
+                                                    fontFamily:
+                                                        'ProximaNova-Regular',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
@@ -648,23 +807,40 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                                         height: 165,
                                         width: 165,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
                                         padding: const EdgeInsets.all(16.0),
                                         child: Column(
                                           children: [
                                             const Text(
                                               'Lite Intensity',
-                                              style: TextStyle(fontSize: 20),
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
                                             ),
                                             Text(
                                               filteredData['LI']?.toString() ??
                                                   'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
+                                              style: const TextStyle(
+                                                fontSize: 45,
+                                                fontFamily:
+                                                    'ProximaNova-Regular',
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -680,23 +856,53 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                                         height: 165,
                                         width: 165,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
                                         padding: const EdgeInsets.all(16.0),
                                         child: Column(
                                           children: [
                                             const Text(
                                               'Temperature',
-                                              style: TextStyle(fontSize: 20),
+                                              style: TextStyle(fontSize: 18),
                                             ),
-                                            Text(
-                                              filteredData['T']?.toString() ??
-                                                  'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/temp.png',
+                                                  height: 60,
+                                                  width: 40,
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  filteredData['T']
+                                                          ?.toString() ??
+                                                      'N/A',
+                                                  style: const TextStyle(
+                                                    fontSize: 45,
+                                                    fontFamily:
+                                                        'ProximaNova-Regular',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
@@ -706,23 +912,37 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
                                         height: 165,
                                         width: 165,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: AppColors.textfields
-                                              .withOpacity(0.3),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: AppColors.textfields
+                                                .withOpacity(0.3),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                offset: Offset(0, 3),
+                                                blurRadius: 4,
+                                                color: Colors.grey,
+                                              ),
+                                              BoxShadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                color: Colors.white,
+                                              )
+                                            ]),
                                         padding: const EdgeInsets.all(16.0),
                                         child: Column(
                                           children: [
                                             const Text(
                                               'Electrical Conductivity',
-                                              style: TextStyle(fontSize: 20),
+                                              style: TextStyle(fontSize: 18),
                                             ),
                                             Text(
                                               filteredData['EC']?.toString() ??
                                                   'N/A',
-                                              style:
-                                                  const TextStyle(fontSize: 40),
+                                              style: const TextStyle(
+                                                fontSize: 45,
+                                                fontFamily:
+                                                    'ProximaNova-Regular',
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -810,7 +1030,7 @@ class NewSkeleton extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Padding(
             padding: EdgeInsets.only(left: 5),

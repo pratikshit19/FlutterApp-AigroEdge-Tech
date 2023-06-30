@@ -15,4 +15,5 @@ class MyRoutes {
   static String onboardingRoute = "/onboarding";
   static String rateusRoute = "/rateus";
   static String realtimeRoute = "/realtime";
+  static String farmlocationRoute = "/farmlocation";
 }
